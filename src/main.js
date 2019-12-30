@@ -96,7 +96,7 @@ function initBaseMessageHandlers() {
       // Save commands as "command messages"
       if (msg.content.startsWith(config.snippetPrefix)) return; // Ignore snippets
       thread.saveCommandMessage(msg);
-    } else if (config.alwaysReply) {
+    } else if (config.alwaysReply || thread.autoreply) {
       // AUTO-REPLY: If config.alwaysReply is enabled, send all chat messages in thread channels as replies
       if (! utils.isStaff(msg.member)) return; // Only staff are allowed to reply
 
