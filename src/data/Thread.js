@@ -462,12 +462,13 @@ class Thread {
    * @returns {Promise<Boolean>}
    */
   async toggleAutoreply() {
+    const curr = this.autoreply;
     await knex('threads')
     .where('id', this.id)
     .update({
-      autoreply: !this.autoreply
+      autoreply: !curr
     });
-    return this.autoreply;
+    return !curr;
   }
 
   /**
