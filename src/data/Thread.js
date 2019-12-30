@@ -22,6 +22,7 @@ const {THREAD_MESSAGE_TYPE, THREAD_STATUS} = require('./constants');
  * @property {Number} scheduled_close_silent
  * @property {String} alert_id
  * @property {String} created_at
+ * @property {Boolean} autoreply
  */
 class Thread {
   constructor(props) {
@@ -455,6 +456,18 @@ class Thread {
       .update({
         alert_id: userId
       });
+  }
+
+  /**
+   * @returns {Promise<Boolean>}
+   */
+  async toggleAutoreply() {
+    await knex('threads')
+    .where('id', this.id)
+    .update({
+      autoreply: !this.autoreply
+    });
+    return this.autoreply;
   }
 
   /**
