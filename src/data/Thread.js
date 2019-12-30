@@ -462,13 +462,14 @@ class Thread {
    * @returns {Promise<Boolean>}
    */
   async toggleAutoreply() {
-    const curr = this.autoreply;
+    // this update will reflect at an unknown future time, so store its value now
+    const current = this.autoreply;
     await knex('threads')
     .where('id', this.id)
     .update({
-      autoreply: !curr
+      autoreply: !current
     });
-    return !curr;
+    return !current;
   }
 
   /**
