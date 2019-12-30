@@ -27,6 +27,7 @@ const version = require('./modules/version');
 const newthread = require('./modules/newthread');
 const idModule = require('./modules/id');
 const alert = require('./modules/alert');
+const auto = require('./modules/auto');
 
 const {ACCIDENTAL_THREAD_MESSAGES} = require('./data/constants');
 
@@ -255,7 +256,8 @@ function initPlugins() {
     version,
     newthread,
     idModule,
-    alert
+    alert,
+    auto
   ];
 
   const plugins = [...builtInPlugins];
