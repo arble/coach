@@ -220,7 +220,7 @@ function initBaseMessageHandlers() {
 
     });
 
-    let content = `**${msg.author.username}#${msg.author.discriminator}** began a coaching session`;
+    content = `**${msg.author.username}#${msg.author.discriminator}** began a coaching session`;
     bot.createMessage(utils.getLogChannel().id, {
       content,
       disableEveryone: false,
