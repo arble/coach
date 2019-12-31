@@ -182,7 +182,7 @@ class Thread {
       });
       const logUrl = await thread.getLogUrl();
       utils.postLog(utils.trimAll(`
-        Coach thread with ${thread.user_name} (${thread.user_id}) was closed by the user before supplying ticket info.
+        Coach thread with ${thread.user_name} (${thread.user_id}) was cancelled by the user before supplying ticket info.
         Logs: ${logUrl}
       `));
     }
