@@ -8,7 +8,7 @@ const attachments = require('./attachments');
 
 const ThreadMessage = require('./ThreadMessage');
 
-const {THREAD_MESSAGE_TYPE, THREAD_STATUS} = require('./constants');
+const {THREAD_MESSAGE_TYPE, THREAD_STATUS, THREAD_GATHER_INFO} = require('./constants');
 
 /**
  * @property {String} id
@@ -166,16 +166,16 @@ class Thread {
 
     // handle the gather info states, if applicable
 
-    if (content === "restart" && this.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
+    if (content === "restart" && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
       await knex('threads')
       .where('id', this.id)
       .update({
-        gather_state: constants.THREAD_GATHER_INFO.PLATFORM
+        gather_state: THREAD_GATHER_INFO.PLATFORM
       });
       this.postToUser(config.gatherRestartMessage);
     }
 
-    if (content === "cancel" && this.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
+    if (content === "cancel" && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
       await messageQueue.add(async () => {
         this.postToUser(config.gatherCancelmessage);
         await this.close(true);
@@ -188,42 +188,42 @@ class Thread {
     }
 
     switch (this.gather_state) {
-      case constants.THREAD_GATHER_INFO.COMPLETE:
+      case THREAD_GATHER_INFO.COMPLETE:
         // proceed as normal back and forth
         break;
-      case constants.THREAD_GATHER_INFO.PLATFORM:
+      case THREAD_GATHER_INFO.PLATFORM:
         await knex('threads')
         .where('id', this.id)
         .update({
           gather_platform: content,
-          gather_state: constants.THREAD_GATHER_INFO.RANK
+          gather_state: THREAD_GATHER_INFO.RANK
         });
         this.postToUser(config.gatherRankMessage);
         break;
-      case constants.THREAD_GATHER_INFO.RANK:
+      case THREAD_GATHER_INFO.RANK:
         await knex('threads')
         .where('id', this.id)
         .update({
           gather_rank: content,
-          gather_state: constants.THREAD_GATHER_INFO.CHOICE
+          gather_state: THREAD_GATHER_INFO.CHOICE
         });
         this.postToUser(config.gatherChoiceMessage);
         break;
-      case constants.THREAD_GATHER_INFO.CHOICE:
+      case THREAD_GATHER_INFO.CHOICE:
         await knex('threads')
         .where('id', this.id)
         .update({
           gather_choice: content,
-          gather_state: constants.THREAD_GATHER_INFO.CHOICE
+          gather_state: THREAD_GATHER_INFO.CHOICE
         });
         this.postToUser(config.gatherRequestMessage);
         break;
-      case constants.THREAD_GATHER_INFO.REQUEST:
+      case THREAD_GATHER_INFO.REQUEST:
         await knex('threads')
         .where('id', this.id)
         .update({
           gather_request: content,
-          gather_state: constants.THREAD_GATHER_INFO.COMPLETE
+          gather_state: THREAD_GATHER_INFO.COMPLETE
         });
         break;
     }
