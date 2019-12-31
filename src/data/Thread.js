@@ -218,7 +218,7 @@ class Thread {
         .where('id', this.id)
         .update({
           gather_choice: content,
-          gather_state: THREAD_GATHER_INFO.CHOICE
+          gather_state: THREAD_GATHER_INFO.REQUEST
         });
         this.postToUser(config.gatherRequestMessage);
         break;
