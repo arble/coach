@@ -78,9 +78,10 @@ const defaultConfig = {
   "gatherRankMessage": "What's your rank? You can give me an SR number or a rank tier (e.g. Gold).",
   "gatherChoiceMessage": "What do you prefer to play? You can give me a list of heroes or a role name.",
   "gatherRequestMessage": "What do you want from the coaching session? Example answers might be \"be more effective with barriers\", " +
-  "\"get more headshots as Widow\" or \"understand when to go in and when to hang back\".",
+  "\"get more headshots as Widow\" or \"identify mistakes in this VOD of my gameplay\".",
   "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
-  " as soon as they can!",
+  "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
+  "things like links to videos you would like reviewed, you can send them right away.",
   "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
   "gatherCancelmessage": "OK. Cancelling this coaching session.",
 

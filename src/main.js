@@ -121,6 +121,8 @@ function initBaseMessageHandlers() {
 
     if (await blocked.isBlocked(msg.author.id)) return;
 
+    let created = false;
+
     // Private message handling is queued so e.g. multiple message in quick succession don't result in multiple channels being created
     messageQueue.add(async () => {
       let thread = await threads.findOpenThreadByUserId(msg.author.id);
@@ -131,9 +133,11 @@ function initBaseMessageHandlers() {
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
         thread = await threads.createNewThreadForUser(msg.author);
+        created = true;
       }
 
-      if (thread) await thread.receiveUserReply(msg);
+      // if we just created the thread, DON'T process the first message, since we ask a set number of questions
+      if (thread && !created) await thread.receiveUserReply(msg);
     });
   });
 
