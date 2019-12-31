@@ -198,6 +198,7 @@ function initBaseMessageHandlers() {
     if (! utils.messageIsOnMainServer(msg)) return;
     if (! msg.mentions.some(user => user.id === bot.user.id)) return;
     if (msg.author.bot) return;
+    if (!config.mentionChannel || msg.channel.id !== config.mentionChannel) return;
 
     if (utils.messageIsOnInboxServer(msg)) {
       // For same server setups, check if the person who pinged modmail is staff. If so, ignore the ping.
@@ -234,6 +235,8 @@ function initBaseMessageHandlers() {
     if (config.botMentionResponse) {
       bot.createMessage(msg.channel.id, config.botMentionResponse.replace(/{userMention}/g, `<@${msg.author.id}>`));
     }
+
+    msg.delete();
   });
 }
 

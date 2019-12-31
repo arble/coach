@@ -165,6 +165,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   try {
     await newThread.postToUser(config.gatherPlatformMessage);
+    await newThread.postSystemMessage("Gathering user platform");
   } catch (err) {
     responseMessageError = err;
   }
