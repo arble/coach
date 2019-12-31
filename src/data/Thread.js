@@ -262,7 +262,7 @@ class Thread {
         `;
 
         bot.createMessage(this.id, {
-          userInfo,
+          content: userInfo,
           disableEveryone: false,
         });
         break;
