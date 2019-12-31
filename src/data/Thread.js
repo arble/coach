@@ -266,10 +266,11 @@ class Thread {
         Please remember to "!move active" if you take on this request, so the categories stay organised.
         `;
 
-        bot.createMessage(this.channel_id, {
+        const requestMessage = await bot.createMessage(this.channel_id, {
           content: userInfo,
           disableEveryone: false,
         });
+        bot.pinMessage(this.channel_id, requestMessage.id);
         break;
     }
 
