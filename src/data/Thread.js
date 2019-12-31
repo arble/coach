@@ -174,6 +174,8 @@ class Thread {
         gather_state: THREAD_GATHER_INFO.PLATFORM
       });
       this.postToUser(config.gatherRestartMessage);
+      this.postSystemMessage("User restarted info collection");
+      return;
     }
 
     if (content === "cancel" && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
@@ -186,6 +188,7 @@ class Thread {
         Coach thread with ${this.user_name} (${this.user_id}) was cancelled by the user before supplying ticket info.
         Logs: ${logUrl}
       `));
+      return;
     }
 
     switch (this.gather_state) {
@@ -226,6 +229,14 @@ class Thread {
           gather_request: content,
           gather_state: THREAD_GATHER_INFO.COMPLETE
         });
+        this.postToUser(config.gatherCompleteMessage);
+        const userInfo = `
+        **Platform:** ${this.gather_platform}
+        **Rank:** ${this.gather_rank}
+        **Hero/Role Choice:** ${this.gather_choice}
+        **Coaching Request:** ${this.gather_request}
+        `;
+        this.postSystemMessage(userInfo);
         break;
     }
 
