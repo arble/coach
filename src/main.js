@@ -218,19 +218,10 @@ function initBaseMessageHandlers() {
 
       thread = await threads.createNewThreadForUser(msg.author);
 
-      if (thread) {
-        await thread.postToUser("this is a new thread")
-      }
     });
 
-    if (mainGuilds.length === 1) {
-      content = `${staffMention}Bot mentioned in ${msg.channel.mention} by **${msg.author.username}#${msg.author.discriminator}**: "${msg.cleanContent}"`;
-    } else {
-      content = `${staffMention}Bot mentioned in ${msg.channel.mention} (${msg.channel.guild.name}) by **${msg.author.username}#${msg.author.discriminator}**: "${msg.cleanContent}"`;
-    }
-
     bot.createMessage(utils.getLogChannel().id, {
-      content,
+      `**${msg.author.username}#${msg.author.discriminator}** began a coaching session`,
       disableEveryone: false,
     });
 

@@ -18,7 +18,8 @@ module.exports = {
     PLATFORM:   1,
     RANK:       2,
     CHOICE:     3,
-    REQUEST:    4
+    REQUEST:    4,
+    COMPLETE:   5
   },
 
   ACCIDENTAL_THREAD_MESSAGES: [

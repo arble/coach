@@ -171,14 +171,11 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
       });
     }
 
-    // Send auto-reply to the user
-    if (config.responseMessage) {
-      try {
-        await newThread.postToUser(config.responseMessage);
-      } catch (err) {
-        responseMessageError = err;
-      }
-    }
+    try {
+      await newThread.postToUser(config.gatherPlatformMessage);
+    } catch (err) {
+      responseMessageError = err;
+    }    
   }
 
   // Post some info to the beginning of the new thread

@@ -72,6 +72,18 @@ const defaultConfig = {
   "closeMessage": null,
   "allowUserClose": false,
 
+  "gatherPlatformMessage": "Welcome to the /r/Overwatch Coach bot. I'm going to ask you a few questions so that the right kind of coach " +
+  "can help you. At any time during these questions, say \"cancel\" to cancel the session entirely, or \"restart\" to start these " +
+  "questions again. What platform do you play on?",
+  "gatherRankMessage": "What's your rank? You can give me an SR number or a rank tier (e.g. Gold).",
+  "gatherChoiceMessage": "What do you prefer to play? You can give me a list of heroes or a role name.",
+  "gatherRequestMessage": "What do you want from the coaching session? Example answers might be \"be more effective with barriers\", " +
+  "\"get more headshots as Widow\" or \"understand when to go in and when to hang back\".",
+  "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
+  " as soon as they can!",
+  "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
+  "gatherCancelmessage": "OK. Cancelling this coaching session.",
+
   "newThreadCategoryId": null,
   "mentionRole": "here",
   "pingOnBotMention": true,
