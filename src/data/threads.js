@@ -165,7 +165,6 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   try {
     await newThread.postToUser(config.gatherPlatformMessage);
-    await newThread.postSystemMessage("Gathering user platform");
   } catch (err) {
     responseMessageError = err;
   }
@@ -225,6 +224,8 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
       await newThread.postNonLogMessage(`📣 New bot version available (${availableUpdate})`);
     }
   }
+
+  await newThread.postSystemMessage("Gathering user platform");
 
   // If there were errors sending a response to the user, note that
   if (responseMessageError) {
