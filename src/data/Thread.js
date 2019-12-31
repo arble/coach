@@ -1,5 +1,6 @@
 const moment = require('moment');
 
+const Eris = require('eris');
 const bot = require('../bot');
 const knex = require('../knex');
 const utils = require('../utils');
@@ -230,11 +231,34 @@ class Thread {
           gather_state: THREAD_GATHER_INFO.COMPLETE
         });
         this.postToUser(config.gatherCompleteMessage);
-        const userInfo = `
+
+        if (config.categoryAutomation.activeThread) {
+
+          // sanity check the config entry
+          const categories = msg.channel.guild.channels.filter(c => {
+            return (c instanceof Eris.CategoryChannel) && (config.categoryAutomation.activeThread == c.id);
+          });
+
+          // this behaviour allows staff to mute the new request category where users are still giving info
+          if (categories.length > 0) {
+            try {
+              await bot.editChannel(this.channel_id, {
+                parentID: categories[0].id
+              });
+            } catch (e) {
+              thread.postSystemMessage(`Failed to move thread: ${e.message}`);
+              return;
+            }
+          }
+        }
+
+        // we use content rather than this.gather_request below because it won't populate immediately
+        const userInfo = `@here New coaching request:
+
         **Platform:** ${this.gather_platform}
         **Rank:** ${this.gather_rank}
         **Hero/Role Choice:** ${this.gather_choice}
-        **Coaching Request:** ${this.gather_request}
+        **Coaching Request:** ${content}
         `;
         this.postSystemMessage(userInfo);
         break;
