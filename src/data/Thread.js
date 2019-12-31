@@ -261,7 +261,7 @@ class Thread {
         **Coaching Request:** ${content}
         `;
 
-        bot.createMessage(this.id, {
+        bot.createMessage(this.channel_id, {
           content: userInfo,
           disableEveryone: false,
         });
