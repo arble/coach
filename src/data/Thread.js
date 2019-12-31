@@ -5,7 +5,7 @@ const knex = require('../knex');
 const utils = require('../utils');
 const config = require('../config');
 const attachments = require('./attachments');
-const {messageQueue} = require('./queue');
+const {messageQueue} = require('../queue');
 
 const ThreadMessage = require('./ThreadMessage');
 
