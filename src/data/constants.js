@@ -14,6 +14,13 @@ module.exports = {
     COMMAND: 6
   },
 
+  THREAD_GATHER_INFO: {
+    PLATFORM:   1,
+    RANK:       2,
+    CHOICE:     3,
+    REQUEST:    4
+  },
+
   ACCIDENTAL_THREAD_MESSAGES: [
     'ok',
     'okay',

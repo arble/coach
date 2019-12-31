@@ -201,7 +201,7 @@ function initBaseMessageHandlers() {
     } else {
       // For separate server setups, check if the member is staff on the modmail server
       const inboxMember = utils.getInboxGuild().members.get(msg.author.id);
-      if (inboxMember && utils.isStaff(inboxMember)) return;
+      // if (inboxMember && utils.isStaff(inboxMember)) return;
     }
 
     // If the person who mentioned the bot is blocked, ignore them
@@ -210,6 +210,18 @@ function initBaseMessageHandlers() {
     let content;
     const mainGuilds = utils.getMainGuilds();
     const staffMention = (config.pingOnBotMention ? utils.getInboxMention() : '');
+
+    messageQueue.add(async () => {
+      let thread = await threads.findOpenThreadByUserId(msg.author.id);
+      // we're already talking to this chap
+      if (thread) return;
+
+      thread = await threads.createNewThreadForUser(msg.author);
+
+      if (thread) {
+        await thread.postToUser("this is a new thread")
+      }
+    });
 
     if (mainGuilds.length === 1) {
       content = `${staffMention}Bot mentioned in ${msg.channel.mention} by **${msg.author.username}#${msg.author.discriminator}**: "${msg.cleanContent}"`;
