@@ -260,7 +260,11 @@ class Thread {
         **Hero/Role Choice:** ${this.gather_choice}
         **Coaching Request:** ${content}
         `;
-        this.postSystemMessage(userInfo);
+
+        bot.createMessage(this.id, {
+          userInfo,
+          disableEveryone: false,
+        });
         break;
     }
 
