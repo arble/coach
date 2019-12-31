@@ -166,28 +166,28 @@ class Thread {
 
     // handle the gather info states, if applicable
 
-    if (content === "restart" && thread.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
+    if (content === "restart" && this.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
       await knex('threads')
       .where('id', this.id)
       .update({
         gather_state: constants.THREAD_GATHER_INFO.PLATFORM
       });
-      thread.postToUser(config.gatherRestartMessage);
+      this.postToUser(config.gatherRestartMessage);
     }
 
-    if (content === "cancel" && thread.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
+    if (content === "cancel" && this.gather_state < constants.THREAD_GATHER_INFO.COMPLETE) {
       await messageQueue.add(async () => {
-        thread.postToUser(config.gatherCancelmessage);
-        await thread.close(true);
+        this.postToUser(config.gatherCancelmessage);
+        await this.close(true);
       });
-      const logUrl = await thread.getLogUrl();
+      const logUrl = await this.getLogUrl();
       utils.postLog(utils.trimAll(`
-        Coach thread with ${thread.user_name} (${thread.user_id}) was cancelled by the user before supplying ticket info.
+        Coach thread with ${this.user_name} (${this.user_id}) was cancelled by the user before supplying ticket info.
         Logs: ${logUrl}
       `));
     }
 
-    switch (thread.gather_state) {
+    switch (this.gather_state) {
       case constants.THREAD_GATHER_INFO.COMPLETE:
         // proceed as normal back and forth
         break;
@@ -198,7 +198,7 @@ class Thread {
           gather_platform: content,
           gather_state: constants.THREAD_GATHER_INFO.RANK
         });
-        thread.postToUser(config.gatherRankMessage);
+        this.postToUser(config.gatherRankMessage);
         break;
       case constants.THREAD_GATHER_INFO.RANK:
         await knex('threads')
@@ -207,7 +207,7 @@ class Thread {
           gather_rank: content,
           gather_state: constants.THREAD_GATHER_INFO.CHOICE
         });
-        thread.postToUser(config.gatherChoiceMessage);
+        this.postToUser(config.gatherChoiceMessage);
         break;
       case constants.THREAD_GATHER_INFO.CHOICE:
         await knex('threads')
@@ -216,7 +216,7 @@ class Thread {
           gather_choice: content,
           gather_state: constants.THREAD_GATHER_INFO.CHOICE
         });
-        thread.postToUser(config.gatherRequestMessage);
+        this.postToUser(config.gatherRequestMessage);
         break;
       case constants.THREAD_GATHER_INFO.REQUEST:
         await knex('threads')
