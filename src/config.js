@@ -73,7 +73,7 @@ const defaultConfig = {
   "allowUserClose": false,
 
   "gatherPlatformMessage": "Welcome to the /r/Overwatch Coach bot. I'm going to ask you a few questions so that the right kind of coach " +
-  "can help you. At any time during these questions, say \"cancel\" to cancel the session entirely, or \"restart\" to start these " +
+  "can help you. At any time during these questions, say \"cancel\" to cancel the coaching session entirely, or \"restart\" to start these " +
   "questions again. What platform do you play on?",
   "gatherRankMessage": "What's your rank? You can give me an SR number or a rank tier (e.g. Gold).",
   "gatherChoiceMessage": "What do you prefer to play? You can give me a list of heroes or a role name.",
@@ -83,7 +83,8 @@ const defaultConfig = {
   "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
   "things like links to videos you would like reviewed, you can send them right away.",
   "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
-  "gatherCancelmessage": "OK. Cancelling this coaching session.",
+  "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again or mentioning me in the " +
+  "main coaching channel",
   "mentionChannel": null,
 
   "newThreadCategoryId": null,
