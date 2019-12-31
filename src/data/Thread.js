@@ -235,7 +235,7 @@ class Thread {
         if (config.categoryAutomation.activeThread) {
 
           // sanity check the config entry
-          const categories = msg.channel.guild.channels.filter(c => {
+          const categories = utils.getInboxGuild().channels.filter(c => {
             return (c instanceof Eris.CategoryChannel) && (config.categoryAutomation.activeThread == c.id);
           });
 
