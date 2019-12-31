@@ -162,20 +162,11 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
   const newThread = await findById(newThreadId);
   let responseMessageError = null;
 
-  if (! quiet) {
-    // Ping moderators of the new thread
-    if (config.mentionRole) {
-      await newThread.postNonLogMessage({
-        content: `${utils.getInboxMention()}New modmail thread (${newThread.user_name})`,
-        disableEveryone: false
-      });
-    }
 
-    try {
-      await newThread.postToUser(config.gatherPlatformMessage);
-    } catch (err) {
-      responseMessageError = err;
-    }    
+  try {
+    await newThread.postToUser(config.gatherPlatformMessage);
+  } catch (err) {
+    responseMessageError = err;
   }
 
   // Post some info to the beginning of the new thread
@@ -221,12 +212,6 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     } else {
       infoHeader += `\n**[${utils.escapeMarkdown(guildData.guild.name)}]** ${headerStr}`;
     }
-  }
-
-  // Modmail history / previous logs
-  const userLogCount = await getClosedThreadCountByUserId(user.id);
-  if (userLogCount > 0) {
-    infoHeader += `\n\nThis user has **${userLogCount}** previous modmail threads. Use \`${config.prefix}logs\` to see them.`;
   }
 
   infoHeader += '\n────────────────';
