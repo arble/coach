@@ -84,6 +84,7 @@ const defaultConfig = {
   "things like links to videos you would like reviewed, you can send them right away.",
   "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
   "gatherCancelmessage": "OK. Cancelling this coaching session.",
+  "mentionChannel": null,
 
   "newThreadCategoryId": null,
   "mentionRole": "here",
