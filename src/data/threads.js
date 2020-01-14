@@ -12,7 +12,7 @@ const utils = require('../utils');
 const updates = require('./updates');
 
 const Thread = require('./Thread');
-const {THREAD_STATUS} = require('./constants');
+const {THREAD_STATUS, THREAD_GATHER_INFO} = require('./constants');
 
 const MINUTES = 60 * 1000;
 const HOURS = 60 * MINUTES;
@@ -156,7 +156,8 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     user_id: user.id,
     user_name: `${user.username}#${user.discriminator}`,
     channel_id: createdChannel.id,
-    created_at: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+    created_at: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
+    gather_state: THREAD_GATHER_INFO.COMPLETE
   });
 
   const newThread = await findById(newThreadId);
