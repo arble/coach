@@ -574,14 +574,13 @@ class Thread {
    */
   async toggleAutoreply(user_id) {
     // this update will reflect at an unknown future time, so store its value now
-    let currentUsers = this.autoreply_users;
-    if (currentUsers === null) currentUsers = {};
+    const currentUsers = this.autoreply_users;
     let result;
-    if (user_id in currentUsers) {
-      delete currentUsers[user_id];
+    if (currentUsers.has(user_id)) {
+      currentUsers.delete(user_id);
       result = false;
     } else {
-      currentUsers[user_id] = true;
+      currentUsers.add(user_id);
       result = true;
     }
     await knex('threads')

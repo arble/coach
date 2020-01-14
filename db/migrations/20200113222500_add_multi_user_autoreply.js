@@ -1,7 +1,7 @@
 
 exports.up = async function(knex, Promise) {
   await knex.schema.table('threads', table => {
-    table.json('autoreply_users').after('gather_request');
+    table.binary('autoreply_users').after('gather_request');
   });
 };
 
