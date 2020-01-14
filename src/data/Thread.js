@@ -585,7 +585,7 @@ class Thread {
     await knex('threads')
     .where('id', this.id)
     .update({
-      autoreply: currentUsers
+      autoreply: JSON.stringify(currentUsers)
     });
     return result;
   }
