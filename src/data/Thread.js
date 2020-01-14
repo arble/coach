@@ -574,7 +574,7 @@ class Thread {
    */
   async toggleAutoreply(user_id) {
     // this update will reflect at an unknown future time, so store its value now
-    const currentUsers = this.autoreply_users;
+    let currentUsers = this.autoreply_users;
     if (currentUsers === null) currentUsers = {};
     let result;
     if (user_id in currentUsers) {
