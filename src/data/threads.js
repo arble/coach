@@ -157,17 +157,18 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     user_name: `${user.username}#${user.discriminator}`,
     channel_id: createdChannel.id,
     created_at: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
-    gather_state: THREAD_GATHER_INFO.COMPLETE
+    gather_state: quiet ? THREAD_GATHER_INFO.COMPLETE : THREAD_GATHER_INFO.PLATFORM
   });
 
   const newThread = await findById(newThreadId);
   let responseMessageError = null;
 
-
-  try {
-    await newThread.postToUser(config.gatherPlatformMessage);
-  } catch (err) {
-    responseMessageError = err;
+  if (!quiet) {
+    try {
+      await newThread.postToUser(config.gatherPlatformMessage);
+    } catch (err) {
+      responseMessageError = err;
+    }
   }
 
   // Post some info to the beginning of the new thread
