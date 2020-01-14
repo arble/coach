@@ -25,6 +25,7 @@ const {THREAD_MESSAGE_TYPE, THREAD_STATUS, THREAD_GATHER_INFO} = require('./cons
  * @property {String} alert_id
  * @property {String} created_at
  * @property {Boolean} autoreply
+ * @property {Object} autoreply_users
  */
 class Thread {
   constructor(props) {
@@ -571,15 +572,23 @@ class Thread {
   /**
    * @returns {Promise<Boolean>}
    */
-  async toggleAutoreply() {
+  async toggleAutoreply(user_id) {
     // this update will reflect at an unknown future time, so store its value now
-    const current = this.autoreply;
+    const currentUsers = this.autoreply_users;
+    let result;
+    if (user_id in currentUsers) {
+      delete currentUsers[user_id];
+      result = false;
+    } else {
+      currentUsers[user_id] = true;
+      result = true;
+    }
     await knex('threads')
     .where('id', this.id)
     .update({
-      autoreply: !current
+      autoreply_users: currentUsers
     });
-    return !current;
+    return result;
   }
 
   /**
