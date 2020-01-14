@@ -1,7 +1,7 @@
 
 exports.up = async function(knex, Promise) {
   await knex.schema.table('threads', table => {
-    table.boolean('autoreply').defaultTo(false).after('scheduled_suspend_name');
+    table.string('autoreply').defaultTo(false).after('scheduled_suspend_name');
   });
 };
 
