@@ -158,7 +158,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     channel_id: createdChannel.id,
     created_at: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
     gather_state: quiet ? THREAD_GATHER_INFO.COMPLETE : THREAD_GATHER_INFO.PLATFORM,
-    autoreply_users: JSON.stringify({}})
+    autoreply_users: JSON.stringify({})
   });
 
   const newThread = await findById(newThreadId);
