@@ -11,8 +11,6 @@ module.exports = ({ bot, knex, config, commands }) => {
     // only allow claiming of threads that are still in "Waiting Threads"
     if (msg.channel.parentID !== config.categoryAutomation.waitingThread) return;
 
-
-    let targetCategory;
     console.log(JSON.stringify(msg.channel.guild.channels));
     const targetCategory = msg.channel.guild.channels.find(c => {
       return (c instanceof Eris.CategoryChannel) && (c.name === catStr);
