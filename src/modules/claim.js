@@ -8,6 +8,7 @@ module.exports = ({ bot, knex, config, commands }) => {
     const username = transliterate.slugify(`${msg.author.username}`);
     const catStr = `${username}#${msg.author.discriminator}`;
 
+    console.log(`${msg.channel.parentID} ${config.categoryAutomation.waitingThread}`);
     // only allow claiming of threads that are still in "Waiting Threads"
     if (msg.channel.parentID !== config.categoryAutomation.waitingThread) return;
 
