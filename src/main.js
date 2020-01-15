@@ -268,7 +268,8 @@ function initPlugins() {
     newthread,
     idModule,
     alert,
-    auto
+    auto,
+    claim
   ];
 
   const plugins = [...builtInPlugins];
