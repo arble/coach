@@ -14,12 +14,10 @@ module.exports = ({ bot, knex, config, commands }) => {
 
     let targetCategory;
     console.log(JSON.stringify(msg.channel.guild.channels));
-    for (cat in msg.channel.guild.channels) {
-      if (cat instanceof Eris.CategoryChannel && cat.name === catStr) {
-        targetCategory = cat;
-        break;
-      }
-    }
+    const targetCategory = msg.channel.guild.channels.find(c => {
+      return (c instanceof Eris.CategoryChannel) && (c.name === catStr);
+    });
+    console.log(JSON.stringify(msg.channel.guild.channels));
 
     if (targetCategory) {
       await bot.editChannel(thread.channel_id, {
