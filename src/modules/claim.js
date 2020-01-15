@@ -11,13 +11,17 @@ module.exports = ({ bot, knex, config, commands }) => {
     // only allow claiming of threads that are still in "Waiting Threads"
     if (msg.channel.parentID !== config.categoryAutomation.waitingThread) return;
 
-    const filtered = msg.channel.guild.channels.filter(c => {
-      return (c instanceof Eris.CategoryChannel) && (c.name === catStr);
-    });
+    let targetCategory;
+    for (cat in msg.channel.guild.channels) {
+      if (cat instanceof Eris.CategoryChannel && cat.name === catStr) {
+        targetCategory = cat;
+        break;
+      }
+    }
 
-    if (filtered.length > 0) {
+    if (targetCategory) {
       await bot.editChannel(thread.channel_id, {
-        parentID: filtered[0].id
+        parentID: targetCategory.id
       });
     } else {
       const newCat = await msg.channel.guild.createChannel(catStr, 4);
