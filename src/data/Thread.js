@@ -204,7 +204,6 @@ class Thread {
           gather_state: THREAD_GATHER_INFO.RANK
         });
         this.postToUser(config.gatherRankMessage);
-        this.postSystemMessage("Gathering user rank");
         break;
       case THREAD_GATHER_INFO.RANK:
         await knex('threads')
@@ -214,7 +213,6 @@ class Thread {
           gather_state: THREAD_GATHER_INFO.CHOICE
         });
         this.postToUser(config.gatherChoiceMessage);
-        this.postSystemMessage("Gathering user role/hero choice");
         break;
       case THREAD_GATHER_INFO.CHOICE:
         await knex('threads')
@@ -224,7 +222,6 @@ class Thread {
           gather_state: THREAD_GATHER_INFO.REQUEST
         });
         this.postToUser(config.gatherRequestMessage);
-        this.postSystemMessage("Gathering user coaching request");
         break;
       case THREAD_GATHER_INFO.REQUEST:
         await knex('threads')
