@@ -354,7 +354,7 @@ async function getExpiredIncompleteThreads() {
   if (!config.gatherTimeout) return [];
   const limit = moment.utc().subtract(config.gatherTimeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss');
   const threads = await knex('threads')
-    .where('status', THREAD_GATHER_INFO.PLATFORM)
+    .where('gather_state', THREAD_GATHER_INFO.PLATFORM)
     .whereNotNull('created_at')
     .where('created_at', '<=', limit)
     .select();
