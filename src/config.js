@@ -82,9 +82,8 @@ const defaultConfig = {
   "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
   "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
   "things like links to videos you would like reviewed, you can send them right away.",
-  "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
-  "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again or mentioning me in the " +
-  "main coaching channel",
+  "gatherRestartMessage": "OK. Let's start over. What **platform** do you play on?",
+  "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again!",
   "gatherTimeoutMessage": "Your session has timed out because you didn't answer the initial questions. You can start another at any time " +
   "by messaging me again.",
   "gatherTimeout": null, // minutes
