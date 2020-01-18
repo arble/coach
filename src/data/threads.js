@@ -228,8 +228,6 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     }
   }
 
-  await newThread.postSystemMessage("Gathering user platform");
-
   // If there were errors sending a response to the user, note that
   if (responseMessageError) {
     await newThread.postSystemMessage(`**NOTE:** Could not send auto-response to the user. The error given was: \`${responseMessageError.message}\``);

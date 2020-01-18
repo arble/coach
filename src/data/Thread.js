@@ -175,7 +175,7 @@ class Thread {
         gather_state: THREAD_GATHER_INFO.PLATFORM
       });
       this.postToUser(config.gatherRestartMessage);
-      this.postSystemMessage("User restarted info collection. Gathering user platform");
+      this.postSystemMessage("User restarted info collection.");
       return;
     }
 
