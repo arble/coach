@@ -260,7 +260,7 @@ class Thread {
         **Hero/Role Choice:** ${this.gather_choice}
         **Coaching Request:** ${content}
 
-        Please remember to "!move active" if you take on this request, so the categories stay organised.
+        Please remember to "!claim" this request if you take it on.
         `;
 
         const requestMessage = await bot.createMessage(this.channel_id, {

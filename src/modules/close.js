@@ -37,6 +37,35 @@ module.exports = ({ bot, knex, config, commands }) => {
 
   scheduledCloseLoop();
 
+  async function applyExpiredCloses() {
+    const threadsToBeClosed = await threads.getExpiredIncompleteThreads();
+    for (const thread of threadsToBeClosed) {
+      if (config.gatherTimeoutMessage) {
+        await thread.postToUser(config.gatherTimeoutMessage).catch(() => {});
+      }
+
+      await thread.close();
+
+      const logUrl = await thread.getLogUrl();
+      utils.postLog(utils.trimAll(`
+        Coaching thread with ${thread.user_name} (${thread.user_id}) was closed due to timeout during user survey.
+        Logs: ${logUrl}
+      `));
+    }
+  }
+
+  async function scheduledExpiryLoop() {
+    try {
+      await applyExpiredCloses();
+    } catch (e) {
+      console.error(e);
+    }
+
+    setTimeout(scheduledExpiryLoop, 30000);
+  }
+
+  scheduledExpiryLoop();
+
   // Close a thread. Closing a thread saves a log of the channel's contents and then deletes the channel.
   commands.addGlobalCommand('close', '[opts...]', async (msg, args) => {
     let thread, closedBy;

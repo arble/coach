@@ -85,6 +85,9 @@ const defaultConfig = {
   "gatherRestartMessage": "OK. Let's start over. What platform do you play on?",
   "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again or mentioning me in the " +
   "main coaching channel",
+  "gatherTimeoutMessage": "Your session has timed out because you didn't answer the initial questions. You can start another at any time " +
+  "by messaging me again.",
+  "gatherTimeout": null, // minutes
   "mentionChannel": null,
 
   "newThreadCategoryId": null,

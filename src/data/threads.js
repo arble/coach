@@ -349,6 +349,19 @@ async function getThreadsThatShouldBeSuspended() {
   return threads.map(thread => new Thread(thread));
 }
 
+async function getExpiredIncompleteThreads() {
+  // if this isn't set, never expire threads in this manner
+  if (!config.gatherTimeout) return [];
+  const limit = moment.utc().subtract(config.gatherTimeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss');
+  const threads = await knex('threads')
+    .where('status', THREAD_GATHER_INFO.PLATFORM)
+    .whereNotNull('created_at')
+    .where('created_at', '<=', limit)
+    .select();
+
+    return threads.map(thread => new Thread(thread));
+}
+
 module.exports = {
   findById,
   findOpenThreadByUserId,
@@ -360,5 +373,6 @@ module.exports = {
   findOrCreateThreadForUser,
   getThreadsThatShouldBeClosed,
   getThreadsThatShouldBeSuspended,
+  getExpiredIncompleteThreads,
   createThreadInDB
 };
