@@ -168,7 +168,7 @@ class Thread {
 
     // handle the gather info states, if applicable
 
-    if (equalsIC(content, "restart") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
+    if (utils.equalsIC(content, "restart") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
       await knex('threads')
       .where('id', this.id)
       .update({
@@ -179,7 +179,7 @@ class Thread {
       return;
     }
 
-    if (equalsIC(content, "cancel") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
+    if (utils.equalsIC(content, "cancel") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
       await messageQueue.add(async () => {
         this.postToUser(config.gatherCancelmessage);
         await this.close(true);
