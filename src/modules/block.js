@@ -44,9 +44,9 @@ module.exports = ({ bot, knex, config, commands }) => {
 
     if (expiresAt) {
       const humanized = humanizeDuration(args.blockTime, { largest: 2, round: true });
-      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from modmail for ${humanized}`);
+      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from coachmail for ${humanized}`);
     } else {
-      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from modmail indefinitely`);
+      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from coachmail indefinitely`);
     }
   };
 
@@ -74,7 +74,7 @@ module.exports = ({ bot, knex, config, commands }) => {
       msg.channel.createMessage(`Scheduled <@${userIdToUnblock}> (id \`${userIdToUnblock}\`) to be unblocked in ${humanized}`);
     } else {
       await blocked.unblock(userIdToUnblock);
-      msg.channel.createMessage(`Unblocked <@${userIdToUnblock}> (id ${userIdToUnblock}) from modmail`);
+      msg.channel.createMessage(`Unblocked <@${userIdToUnblock}> (id ${userIdToUnblock}) from coachmail`);
     }
   };
 

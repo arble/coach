@@ -18,7 +18,7 @@ let logChannel = null;
  */
 function getInboxGuild() {
   if (! inboxGuild) inboxGuild = bot.guilds.find(g => g.id === config.mailGuildId);
-  if (! inboxGuild) throw new BotError('The bot is not on the modmail (inbox) server!');
+  if (! inboxGuild) throw new BotError('The bot is not on the coachmail (inbox) server!');
   return inboxGuild;
 }
 
@@ -73,7 +73,7 @@ function postError(channel, str, opts = {}) {
 }
 
 /**
- * Returns whether the given member has permission to use modmail commands
+ * Returns whether the given member has permission to use coachmail commands
  * @param member
  * @returns {boolean}
  */

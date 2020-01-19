@@ -44,7 +44,7 @@ async function refreshVersions() {
       hostname: 'api.github.com',
       path: `/repos/${owner}/${repo}/tags`,
       headers: {
-        'User-Agent': `Modmail Bot (https://github.com/${owner}/${repo}) (${packageJson.version})`
+        'User-Agent': `Coachmail Bot (https://github.com/${owner}/${repo}) (${packageJson.version})`
       }
     },
     async res => {

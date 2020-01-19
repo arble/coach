@@ -19,7 +19,7 @@ module.exports = ({ bot, knex, config, commands }) => {
 
       const logUrl = await thread.getLogUrl();
       utils.postLog(utils.trimAll(`
-        Modmail thread with ${thread.user_name} (${thread.user_id}) was closed as scheduled by ${thread.scheduled_close_name}
+        Coachmail thread with ${thread.user_name} (${thread.user_id}) was closed as scheduled by ${thread.scheduled_close_name}
         Logs: ${logUrl}
       `));
     }
@@ -150,7 +150,7 @@ module.exports = ({ bot, knex, config, commands }) => {
 
     const logUrl = await thread.getLogUrl();
     utils.postLog(utils.trimAll(`
-      Modmail thread with ${thread.user_name} (${thread.user_id}) was closed by ${closedBy}
+      Coachmail thread with ${thread.user_name} (${thread.user_id}) was closed by ${closedBy}
       Logs: ${logUrl}
     `));
   });
@@ -169,7 +169,7 @@ module.exports = ({ bot, knex, config, commands }) => {
 
     const logUrl = await thread.getLogUrl();
     utils.postLog(utils.trimAll(`
-      Modmail thread with ${thread.user_name} (${thread.user_id}) was closed automatically because the channel was deleted
+      Coachmail thread with ${thread.user_name} (${thread.user_id}) was closed automatically because the channel was deleted
       Logs: ${logUrl}
     `));
   });

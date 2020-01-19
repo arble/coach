@@ -114,10 +114,10 @@ const defaultConfig = {
   "guildGreetings": {},
 
   "requiredAccountAge": null, // In hours
-  "accountAgeDeniedMessage": "Your Discord account is not old enough to contact modmail.",
+  "accountAgeDeniedMessage": "Your Discord account is not old enough to contact coachmail.",
 
   "requiredTimeOnServer": null, // In minutes
-  "timeOnServerDeniedMessage": "You haven't been a member of the server for long enough to contact modmail.",
+  "timeOnServerDeniedMessage": "You haven't been a member of the server for long enough to contact coachmail.",
 
   "relaySmallAttachmentsAsAttachments": false,
   "smallAttachmentLimit": 1024 * 1024 * 2,

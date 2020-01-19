@@ -50,7 +50,7 @@ function getHeaderGuildInfo(member) {
 }
 
 /**
- * Creates a new modmail thread for the specified user
+ * Creates a new coachmail thread for the specified user
  * @param {User} user
  * @param {Member} member
  * @param {Boolean} quiet If true, doesn't ping mentionRole or reply with responseMessage
@@ -144,9 +144,9 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
   // Attempt to create the inbox channel for this thread
   let createdChannel;
   try {
-    createdChannel = await utils.getInboxGuild().createChannel(channelName, null, 'New Modmail thread', newThreadCategoryId);
+    createdChannel = await utils.getInboxGuild().createChannel(channelName, null, 'New coachmail thread', newThreadCategoryId);
   } catch (err) {
-    console.error(`Error creating modmail channel for ${user.username}#${user.discriminator}!`);
+    console.error(`Error creating coachmail channel for ${user.username}#${user.discriminator}!`);
     throw err;
   }
 

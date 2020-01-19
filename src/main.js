@@ -83,7 +83,7 @@ function initStatus() {
 
 function initBaseMessageHandlers() {
   /**
-   * When a moderator posts in a modmail thread...
+   * When a moderator posts in a coachmail thread...
    * 1) If alwaysReply is enabled, reply to the user
    * 2) If alwaysReply is disabled, save that message as a chat message in the thread
    */
@@ -112,7 +112,7 @@ function initBaseMessageHandlers() {
 
   /**
    * When we get a private message...
-   * 1) Find the open modmail thread for this user, or create a new one
+   * 1) Find the open coachmail thread for this user, or create a new one
    * 2) Post the message as a user reply in the thread
    */
   bot.on('messageCreate', async msg => {
@@ -178,7 +178,7 @@ function initBaseMessageHandlers() {
   });
 
   /**
-   * When a staff message is deleted in a modmail thread, delete it from the database as well
+   * When a staff message is deleted in a coachmail thread, delete it from the database as well
    */
   bot.on('messageDelete', async msg => {
     if (! msg.author) return;

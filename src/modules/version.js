@@ -15,7 +15,7 @@ module.exports = ({ bot, knex, config, commands }) => {
     const packageJson = require('../../package.json');
     const packageVersion = packageJson.version;
 
-    let response = `Modmail v${packageVersion}`;
+    let response = `Coachmail v${packageVersion}`;
 
     let isGit;
     try {

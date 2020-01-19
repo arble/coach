@@ -3,10 +3,10 @@ const threads = require("../data/threads");
 const Eris = require("eris");
 
 module.exports = ({ bot }) => {
-  // Typing proxy: forwarding typing events between the DM and the modmail thread
+  // Typing proxy: forwarding typing events between the DM and the coachmail thread
   if(config.typingProxy || config.typingProxyReverse) {
     bot.on("typingStart", async (channel, user) => {
-      // config.typingProxy: forward user typing in a DM to the modmail thread
+      // config.typingProxy: forward user typing in a DM to the coachmail thread
       if (config.typingProxy && (channel instanceof Eris.PrivateChannel)) {
         const thread = await threads.findOpenThreadByUserId(user.id);
         if (! thread) return;

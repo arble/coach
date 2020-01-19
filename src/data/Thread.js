@@ -99,7 +99,7 @@ class Thread {
       return false;
     }
 
-    // Send the reply to the modmail thread
+    // Send the reply to the coachmail thread
     await this.postToThreadChannel(threadContent, files);
 
     // Add the message to the database
