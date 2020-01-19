@@ -310,6 +310,10 @@ function disableCodeBlocks(str) {
   return str.replace(/`/g, "`\u200b");
 }
 
+function equalsIC(str, other) {
+  return str.localeCompare(other, undefined, {sensitivity: 'base'}) === 0;
+}
+
 module.exports = {
   BotError,
 
@@ -346,4 +350,5 @@ module.exports = {
 
   escapeMarkdown,
   disableCodeBlocks,
+  equalsIC
 };

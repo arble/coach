@@ -191,54 +191,6 @@ function initBaseMessageHandlers() {
 
     thread.deleteChatMessage(msg.id);
   });
-
-  /**
-   * When the bot is mentioned on the main server, ping staff in the log channel about it
-   */
-  bot.on('messageCreate', async msg => {
-    if (! utils.messageIsOnMainServer(msg)) return;
-    if (! msg.mentions.some(user => user.id === bot.user.id)) return;
-    if (msg.author.bot) return;
-    if (!config.mentionChannel || msg.channel.id !== config.mentionChannel) return;
-
-    if (utils.messageIsOnInboxServer(msg)) {
-      // For same server setups, check if the person who pinged modmail is staff. If so, ignore the ping.
-      if (utils.isStaff(msg.member)) return;
-    } else {
-      // For separate server setups, check if the member is staff on the modmail server
-      const inboxMember = utils.getInboxGuild().members.get(msg.author.id);
-      // if (inboxMember && utils.isStaff(inboxMember)) return;
-    }
-
-    // If the person who mentioned the bot is blocked, ignore them
-    if (await blocked.isBlocked(msg.author.id)) return;
-
-    let content;
-    const mainGuilds = utils.getMainGuilds();
-    const staffMention = (config.pingOnBotMention ? utils.getInboxMention() : '');
-
-    messageQueue.add(async () => {
-      let thread = await threads.findOpenThreadByUserId(msg.author.id);
-      // we're already talking to this chap
-      if (thread) return;
-
-      thread = await threads.createNewThreadForUser(msg.author);
-
-    });
-
-    content = `**${msg.author.username}#${msg.author.discriminator}** began a coaching session`;
-    bot.createMessage(utils.getLogChannel().id, {
-      content,
-      disableEveryone: false,
-    });
-
-    // Send an auto-response to the mention, if enabled
-    if (config.botMentionResponse) {
-      bot.createMessage(msg.channel.id, config.botMentionResponse.replace(/{userMention}/g, `<@${msg.author.id}>`));
-    }
-
-    msg.delete();
-  });
 }
 
 function initPlugins() {

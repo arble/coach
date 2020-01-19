@@ -72,9 +72,9 @@ const defaultConfig = {
   "closeMessage": null,
   "allowUserClose": false,
 
-  "gatherPlatformMessage": "Welcome to the /r/Overwatch Coach bot. I'm going to ask you a few questions so that the right kind of coach " +
-  "can help you. At any time during these questions, say **\"cancel\"** to cancel the coaching session entirely, or **\"restart\"** to " +
-  "start these questions again. What **platform** do you play on?",
+  "gatherPlatformMessage": "Welcome to the /r/Overwatch CoachMail bot. I'm going to ask you a few questions so that the right kind of " +
+  "coach can help you. At any time during these questions, say **\"cancel\"** to cancel the coaching session entirely, or " +
+  "**\"restart\"** to start these questions again. What **platform** do you play on?",
   "gatherRankMessage": "What's your **rank**? You can give me an **SR number** or a **rank tier** (e.g. **Gold**).",
   "gatherChoiceMessage": "Which **heroes** or **roles** do you prefer to play?",
   "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
