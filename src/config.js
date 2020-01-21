@@ -87,7 +87,6 @@ const defaultConfig = {
   "gatherTimeoutMessage": "Your session has timed out because you didn't answer the initial questions. You can start another at any time " +
   "by messaging me again.",
   "gatherTimeout": null, // minutes
-  "mentionChannel": null,
 
   "newThreadCategoryId": null,
   "mentionRole": "here",

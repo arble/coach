@@ -8,8 +8,8 @@ module.exports = ({ bot, knex, config, commands }) => {
     const username = transliterate.slugify(`${msg.author.username}`);
     const catStr = `${username}#${msg.author.discriminator}`;
 
-    // only allow claiming of threads that are still in "Waiting Threads"
-    if (msg.channel.parentID !== config.categoryAutomation.waitingThread) return;
+    // only allow claiming of threads that are still in "Waiting Threads" if this property is defined
+    if ((msg.channel.parentID !== config.categoryAutomation.waitingThread) && config.categoryAutomation.waitingThread) return;
 
     const targetCategory = msg.channel.guild.channels.find(c => {
       return (c instanceof Eris.CategoryChannel) && (c.name === catStr);
