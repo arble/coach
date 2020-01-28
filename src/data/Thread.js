@@ -256,7 +256,8 @@ class Thread {
         }
 
         // we use content rather than this.gather_request below because it won't populate immediately
-        const userInfo = `@here New coaching request:
+        const mention = utils.getInboxMention();
+        const userInfo = `${mention} New coaching request:
 
         **Platform:** ${this.gather_platform}
         **Rank:** ${this.gather_rank}
@@ -573,6 +574,7 @@ Please remember to "!claim" this request if you take it on.
   async apologise() {
     try {
       await this.postToUser(config.apologyMessage);
+      await this.postSystemMessage(`⌚ Sent user a long wait apology message.`);
     } catch (err) {
       await this.postSystemMessage(`**NOTE:** Could not send auto-response to the user. The error given was: \`${err.message}\``);
     }
