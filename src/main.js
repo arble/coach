@@ -146,7 +146,7 @@ function initBaseMessageHandlers() {
     if (!config.mainGuildId.includes(guild.id)) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
-      thread.postSystemMessage('⚠️ User left the server.');
+      thread.postSystemMessage('⚠️ **User left the server.**');
     }
   });
 
@@ -154,7 +154,7 @@ function initBaseMessageHandlers() {
     if (!config.mainGuildId.includes(guild.id)) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
-      thread.postSystemMessage('⚠️ User rejoined the server.');
+      thread.postSystemMessage('⚠️ **User rejoined the server.**');
     }
   });
 
