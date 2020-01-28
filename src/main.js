@@ -142,6 +142,22 @@ function initBaseMessageHandlers() {
     });
   });
 
+  bot.on('guildMemberRemove', async (guild, member) => {
+    if (guild.id !== config.mainGuildId) return;
+    const thread = await threads.findOpenThreadByUserId(member.id);
+    if (thread) {
+      thread.postSystemMessage('⚠️ User left the server.');
+    }
+  });
+
+  bot.on('guildMemberAdd', async (guild, member) => {
+    if (guild.id !== config.mainGuildId) return;
+    const thread = await threads.findOpenThreadByUserId(member.id);
+    if (thread) {
+      thread.postSystemMessage('⚠️ User rejoined the server.');
+    }
+  });
+
   /**
    * When a message is edited...
    * 1) If that message was in DMs, and we have a thread open with that user, post the edit as a system message in the thread
