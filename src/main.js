@@ -143,6 +143,7 @@ function initBaseMessageHandlers() {
   });
 
   bot.on('guildMemberRemove', async (guild, member) => {
+    console.log("User left");
     if (guild.id !== config.mainGuildId) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
@@ -151,6 +152,7 @@ function initBaseMessageHandlers() {
   });
 
   bot.on('guildMemberAdd', async (guild, member) => {
+    console.log("User joined");
     if (guild.id !== config.mainGuildId) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
