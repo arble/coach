@@ -571,7 +571,12 @@ Please remember to "!claim" this request if you take it on.
    * @returns {Promise<void>}
    */
   async apologise() {
-    await this.postToUser(config.apologyMessage);
+    try {
+      await this.postToUser(config.apologyMessage);
+    } catch (err) {
+      await newThread.postSystemMessage(`**NOTE:** Could not send auto-response to the user. The error given was: \`${err.message}\``);
+    }
+
     await knex('threads')
       .where('id', this.id)
       .update({
