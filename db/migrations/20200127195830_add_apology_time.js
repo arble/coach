@@ -1,7 +1,7 @@
 
 exports.up = async function(knex, Promise) {
   await knex.schema.table('threads', table => {
-    table.dateTime('apology_sent_at').index().nullable().defaultTo(null).after('gather_request');
+    table.dateTime('apology_sent_at').nullable().defaultTo(null).after('gather_request');
   });
 };
 
