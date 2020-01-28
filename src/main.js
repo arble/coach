@@ -143,20 +143,15 @@ function initBaseMessageHandlers() {
   });
 
   bot.on('guildMemberRemove', async (guild, member) => {
-    console.log("User left");
-    console.log(`${guild.id.trim() === config.mainGuildId.trim()}`);
-    if (guild.id !== config.mainGuildId) return;
-    console.log("Checking for a thread");
+    if (!config.mainGuildId.includes(guild.id)) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
-    console.log(`Checked: ${thread !== null}`);
     if (thread) {
       thread.postSystemMessage('⚠️ User left the server.');
     }
   });
 
   bot.on('guildMemberAdd', async (guild, member) => {
-    console.log("User joined");
-    if (guild.id !== config.mainGuildId) return;
+    if (!config.mainGuildId.includes(guild.id)) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
       thread.postSystemMessage('⚠️ User rejoined the server.');
