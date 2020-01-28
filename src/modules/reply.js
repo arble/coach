@@ -2,6 +2,7 @@ const attachments = require("../data/attachments");
 const utils = require('../utils');
 const config = require('../config');
 const moment = require('moment');
+const threads = require('../data/threads');
 
 module.exports = ({ bot, knex, config, commands }) => {
   // Mods can reply to coachmail threads using !r or !reply
