@@ -574,7 +574,7 @@ Please remember to "!claim" this request if you take it on.
     try {
       await this.postToUser(config.apologyMessage);
     } catch (err) {
-      await newThread.postSystemMessage(`**NOTE:** Could not send auto-response to the user. The error given was: \`${err.message}\``);
+      await this.postSystemMessage(`**NOTE:** Could not send auto-response to the user. The error given was: \`${err.message}\``);
     }
 
     await knex('threads')
