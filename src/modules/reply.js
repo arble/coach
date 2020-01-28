@@ -34,7 +34,7 @@ module.exports = ({ bot, knex, config, commands }) => {
   });
 
   async function applyScheduledApologies() {
-    const threadsToApologiseFor = await threads.getThreadsThatMightBeSorry();
+    const threadsToApologiseFor = await threads.getThreadsThatShouldBeSorry();
     for (const thread of threadsToApologiseFor) {
       await thread.apologise();
     }
