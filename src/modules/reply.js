@@ -1,5 +1,7 @@
 const attachments = require("../data/attachments");
 const utils = require('../utils');
+const config = require('../config');
+const moment = require('moment');
 
 module.exports = ({ bot, knex, config, commands }) => {
   // Mods can reply to coachmail threads using !r or !reply
@@ -29,4 +31,23 @@ module.exports = ({ bot, knex, config, commands }) => {
   }, {
     aliases: ['ar']
   });
+
+  async function applyScheduledApologies() {
+    const threadsToApologiseFor = await threads.getThreadsThatMightBeSorry();
+    for (const thread of threadsToApologiseFor) {
+      await thread.apologise();
+    }
+  }
+
+  async function scheduledApologyLoop() {
+    try {
+      await applyScheduledApologies();
+    } catch (e) {
+      console.error(e);
+    }
+
+    setTimeout(scheduledApologyLoop, 60000);
+  }
+
+  scheduledApologyLoop();
 };

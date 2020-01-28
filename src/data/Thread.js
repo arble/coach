@@ -54,7 +54,7 @@ class Thread {
 
     // Build the reply message
     let dmContent = `**${modUsername}:** ${text}`;
-    let threadContent = `**${logModUsername}:** ${text}`;
+    let threadContent = `📢 **${logModUsername}:** ${text}`;
     let logContent = text;
 
     if (config.threadTimestamps) {
@@ -130,7 +130,7 @@ class Thread {
       content = '<message contains embeds>';
     }
 
-    let threadContent = `**${msg.author.username}#${msg.author.discriminator}:** ${content}`;
+    let threadContent = `🗨️ **${msg.author.username}#${msg.author.discriminator}:** ${content}`;
     let logContent = msg.content;
 
     if (config.threadTimestamps) {
@@ -231,6 +231,9 @@ class Thread {
           gather_state: THREAD_GATHER_INFO.COMPLETE
         });
         this.postToUser(config.gatherCompleteMessage);
+        if (config.allowUserClose) {
+          this.postToUser(config.userCanCloseMessage);
+        }
 
         if (config.categoryAutomation.waitingThread) {
 
@@ -562,6 +565,17 @@ Please remember to "!claim" this request if you take it on.
       .where('id', this.id)
       .update({
         alert_id: userId
+      });
+  }
+  /**
+   * @returns {Promise<void>}
+   */
+  async apologise() {
+    await this.postToUser(config.apologyMessage);
+    await knex('threads')
+      .where('id', this.id)
+      .update({
+        apology_sent_at: moment.utc().format('YYYY-MM-DD HH:mm:ss')
       });
   }
 

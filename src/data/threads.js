@@ -347,6 +347,20 @@ async function getThreadsThatShouldBeSuspended() {
   return threads.map(thread => new Thread(thread));
 }
 
+async function getThreadsThatShouldBeSorry() {
+  if (!config.apologyMessage || !config.apologyTimeout) return [];
+  const limit = moment.utc().subtract(config.apologyTimeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss');
+  const threads = await knex('threads')
+    .where('status', THREAD_STATUS.OPEN)
+    .whereNull('apology_sent_at')
+    .where('created_at', '<=', limit)
+    .select();
+
+    return threads.map(thread => new Thread(thread)).filter(thread => {
+      return bot.getChannel(thread.channel_id).parentID === config.categoryAutomation.waitingThread;
+    });
+}
+
 async function getExpiredIncompleteThreads() {
   // if this isn't set, never expire threads in this manner
   if (!config.gatherTimeout) return [];
@@ -373,5 +387,6 @@ module.exports = {
   getThreadsThatShouldBeClosed,
   getThreadsThatShouldBeSuspended,
   getExpiredIncompleteThreads,
+  getThreadsThatShouldBeSorry,
   createThreadInDB
 };
