@@ -144,6 +144,7 @@ function initBaseMessageHandlers() {
 
   bot.on('guildMemberRemove', async (guild, member) => {
     console.log("User left");
+    console.log(`${guild.id} ${config.mainGuildId}`);
     if (guild.id !== config.mainGuildId) return;
     const thread = await threads.findOpenThreadByUserId(member.id);
     if (thread) {
