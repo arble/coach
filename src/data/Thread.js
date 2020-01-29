@@ -54,7 +54,7 @@ class Thread {
 
     // Build the reply message
     let dmContent = `**${modUsername}:** ${text}`;
-    let threadContent = `🇲 **${logModUsername}:** ${text}`;
+    let threadContent = `⬅️ **${logModUsername}:** ${text}`;
     let logContent = text;
 
     if (config.threadTimestamps) {
