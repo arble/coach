@@ -54,7 +54,7 @@ class Thread {
 
     // Build the reply message
     let dmContent = `**${modUsername}:** ${text}`;
-    let threadContent = `📢 **${logModUsername}:** ${text}`;
+    let threadContent = `🇲 **${logModUsername}:** ${text}`;
     let logContent = text;
 
     if (config.threadTimestamps) {
@@ -257,7 +257,7 @@ class Thread {
 
         // we use content rather than this.gather_request below because it won't populate immediately
         const mention = utils.getInboxMention();
-        const userInfo = `${mention} New coaching request:
+        const userInfo = `${mention}New coaching request:
 
         **Platform:** ${this.gather_platform}
         **Rank:** ${this.gather_rank}
