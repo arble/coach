@@ -25,6 +25,7 @@ const {THREAD_MESSAGE_TYPE, THREAD_STATUS, THREAD_GATHER_INFO} = require('./cons
  * @property {String} alert_id
  * @property {String} created_at
  * @property {Boolean} autoreply
+ * @property {String} apology_sent_at
  */
 class Thread {
   constructor(props) {
@@ -111,6 +112,15 @@ class Thread {
       is_anonymous: (isAnonymous ? 1 : 0),
       dm_message_id: dmMessage.id
     });
+
+    // hack - treat a user reply as apology
+    if (!this.apology_sent_at) {
+      await knex('threads')
+        .where('id', this.id)
+        .update({
+          apology_sent_at: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+        });
+    }
 
     if (this.scheduled_close_at) {
       await this.cancelScheduledClose();
