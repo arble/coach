@@ -360,6 +360,7 @@ Please remember to "!claim" this request if you take it on.
    */
   async postSystemMessage(text, ...args) {
     const msg = await this.postToThreadChannel(text, ...args);
+    if (!msg) return;
     await this.addThreadMessageToDB({
       message_type: THREAD_MESSAGE_TYPE.SYSTEM,
       user_id: null,
