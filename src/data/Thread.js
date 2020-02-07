@@ -627,7 +627,7 @@ Please remember to "!claim" this request if you take it on.
           .update({
             sub_id: userId
           });
-        return `You will now be pinged each time the user replies here.`
+        return `You will now be pinged each time the user replies here.`;
       }
     }
   }
