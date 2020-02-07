@@ -301,7 +301,7 @@ Please remember to "!claim" this request if you take it on.
         await knex('threads')
           .where('id', this.id)
           .update({
-            sub_last: now.format('YYYY-MM-DD HH:mm:ss');
+            sub_last: now.format('YYYY-MM-DD HH:mm:ss')
           });
       } else {
         await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
