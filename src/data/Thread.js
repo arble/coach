@@ -167,6 +167,21 @@ class Thread {
       }
     }
 
+    if (this.sub_id) {
+      if (this.sub_timeout && this.sub_last < moment.utc().subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
+        threadContent = `<@!${this.sub_id}> ` + threadContent;
+        //await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
+        await knex('threads')
+          .where('id', this.id)
+          .update({
+            sub_last: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+          });
+      } else if (!this.sub_timeout) {
+        threadContent = `<@!${this.sub_id}> ` + threadContent;
+        //await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
+      }
+    }
+
     await this.postToThreadChannel(threadContent, attachmentFiles);
     await this.addThreadMessageToDB({
       message_type: THREAD_MESSAGE_TYPE.FROM_USER,
@@ -294,17 +309,6 @@ Please remember to "!claim" this request if you take it on.
     if (this.alert_id) {
       await this.setAlert(null);
       await this.postSystemMessage(`<@!${this.alert_id}> New message from ${this.user_name}`);
-    } else if (this.sub_id) {
-      if (this.sub_timeout && this.sub_last < moment.utc().subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
-        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
-        await knex('threads')
-          .where('id', this.id)
-          .update({
-            sub_last: moment.utc().format('YYYY-MM-DD HH:mm:ss')
-          });
-      } else if (!this.sub_timeout) {
-        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
-      }
     }
   }
 
