@@ -29,6 +29,7 @@ const idModule = require('./modules/id');
 const alert = require('./modules/alert');
 const auto = require('./modules/auto');
 const claim = require('./modules/claim');
+const sub = require('./modules/sub');
 
 const {ACCIDENTAL_THREAD_MESSAGES} = require('./data/constants');
 
