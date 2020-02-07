@@ -238,7 +238,8 @@ function initPlugins() {
     idModule,
     alert,
     auto,
-    claim
+    claim,
+    sub
   ];
 
   const plugins = [...builtInPlugins];

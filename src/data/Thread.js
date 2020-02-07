@@ -26,6 +26,7 @@ const {THREAD_MESSAGE_TYPE, THREAD_STATUS, THREAD_GATHER_INFO} = require('./cons
  * @property {String} created_at
  * @property {Boolean} autoreply
  * @property {String} apology_sent_at
+ * @property {String} sub_id
  */
 class Thread {
   constructor(props) {
@@ -293,6 +294,18 @@ Please remember to "!claim" this request if you take it on.
     if (this.alert_id) {
       await this.setAlert(null);
       await this.postSystemMessage(`<@!${this.alert_id}> New message from ${this.user_name}`);
+    } else if (this.sub_id) {
+      const now = moment.utc();
+      if (this.sub_timeout && this.sub_last < now.subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
+        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
+        await knex('threads')
+          .where('id', this.id)
+          .update({
+            sub_last: now.format('YYYY-MM-DD HH:mm:ss');
+          });
+      } else {
+        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
+      }
     }
   }
 
@@ -578,6 +591,45 @@ Please remember to "!claim" this request if you take it on.
       .update({
         alert_id: userId
       });
+  }
+
+  async toggleSub(userId, timeout) {
+    if (this.sub_id) {
+      if (this.sub_id != userId) {
+        return `Someone else is already subscribed to this thread. For the time being, only a single user can have this enabled at once.`;
+      } else {
+        await knex('threads')
+          .where('id', this.id)
+          .update({
+            sub_id: null,
+            sub_last: null,
+            sub_timeout: null
+          });
+        return `You will no longer be pinged each time this user sends a message.`;
+      }
+    } else {
+      if (timeout) {
+        if (timeout < 0 || timeout > 1440) {
+          return `Timeouts are limited to between 1 and 1440 minutes (one day).`;
+        }
+        const now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
+        await knex('threads')
+          .where('id', this.id)
+          .update({
+            sub_id: userId,
+            sub_timeout: timeout,
+            sub_last: now
+          });
+        return `You will now be pinged each time the user replies here, at most every **${timeout}** minutes.`;
+      } else {
+        await knex('threads')
+          .where('id', this.id)
+          .update({
+            sub_id: userId
+          });
+        return `You will now be pinged each time the user replies here.`
+      }
+    }
   }
   /**
    * @returns {Promise<void>}
