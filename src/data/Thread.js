@@ -297,13 +297,13 @@ Please remember to "!claim" this request if you take it on.
     } else if (this.sub_id) {
       const now = moment.utc();
       if (this.sub_timeout && this.sub_last < now.subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
-        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name} (No more pings for ${this.sub_timeout} minutes)`);
+        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
         await knex('threads')
           .where('id', this.id)
           .update({
             sub_last: now.format('YYYY-MM-DD HH:mm:ss')
           });
-      } else {
+      } else if (!this.sub_timeout) {
         await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
       }
     }
