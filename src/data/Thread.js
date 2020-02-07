@@ -295,13 +295,12 @@ Please remember to "!claim" this request if you take it on.
       await this.setAlert(null);
       await this.postSystemMessage(`<@!${this.alert_id}> New message from ${this.user_name}`);
     } else if (this.sub_id) {
-      const now = moment.utc();
-      if (this.sub_timeout && this.sub_last < now.subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
-        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
+      if (this.sub_timeout && this.sub_last < moment.utc().subtract(this.sub_timeout, 'MINUTES').format('YYYY-MM-DD HH:mm:ss')) {
+        await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name} (No more for ${this.sub_timeout} minutes)`);
         await knex('threads')
           .where('id', this.id)
           .update({
-            sub_last: now.format('YYYY-MM-DD HH:mm:ss')
+            sub_last: moment.utc().format('YYYY-MM-DD HH:mm:ss')
           });
       } else if (!this.sub_timeout) {
         await this.postSystemMessage(`<@!${this.sub_id}> New message from ${this.user_name}`);
