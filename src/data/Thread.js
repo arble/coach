@@ -275,7 +275,7 @@ class Thread {
                 parentID: categories[0].id
               });
             } catch (e) {
-              thread.postSystemMessage(`Failed to move thread: ${e.message}`);
+              this.postSystemMessage(`Failed to move thread: ${e.message}`);
               return;
             }
           }
