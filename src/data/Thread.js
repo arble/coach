@@ -276,7 +276,6 @@ class Thread {
               });
             } catch (e) {
               this.postSystemMessage(`Failed to move thread: ${e.message}`);
-              return;
             }
           }
         }
