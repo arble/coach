@@ -314,6 +314,23 @@ function equalsIC(str, other) {
   return str.localeCompare(other, undefined, {sensitivity: 'base'}) === 0;
 }
 
+function roleToCategory(role) {
+  switch (role.toLowerCase()) {
+    case 'support':
+    case 'healer':
+      return config.categoryAutomation.supportThread;
+    case 'damage':
+    case 'dps':
+    case 'offense':
+    case 'defense':
+      return config.categoryAutomation.damageThread;
+    case 'tank':
+      return config.categoryAutomation.tankThread;
+    default:
+      return config.categoryAutomation.waitingThread;
+  }
+}
+
 module.exports = {
   BotError,
 
@@ -350,5 +367,6 @@ module.exports = {
 
   escapeMarkdown,
   disableCodeBlocks,
-  equalsIC
+  equalsIC,
+  roleToCategory
 };

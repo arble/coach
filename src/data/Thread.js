@@ -261,11 +261,12 @@ class Thread {
           this.postToUser(config.userCanCloseMessage);
         }
 
-        if (config.categoryAutomation.waitingThread) {
+        const targetCategory = utils.roleToCategory(this.gather_choice);
 
+        if (targetCategory) {
           // sanity check the config entry
           const categories = utils.getInboxGuild().channels.filter(c => {
-            return (c instanceof Eris.CategoryChannel) && (config.categoryAutomation.waitingThread == c.id);
+            return (c instanceof Eris.CategoryChannel) && (targetCategory == c.id);
           });
 
           // this behaviour allows staff to mute the new request category where users are still giving info

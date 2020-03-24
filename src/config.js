@@ -76,7 +76,7 @@ const defaultConfig = {
   "coach can help you. At any time during these questions, say **\"cancel\"** to cancel the coaching session entirely, or " +
   "**\"restart\"** to start these questions again. What **platform** do you play on?",
   "gatherRankMessage": "What's your **rank**? You can give me an **SR number** or a **rank tier** (e.g. **Gold**).",
-  "gatherChoiceMessage": "Which **heroes** or **roles** do you prefer to play?",
+  "gatherChoiceMessage": "Which **role** would you like coaching on? If you're looking for something not tied to a specific role, answer 'none'",
   "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
   "\"get good at Widow\" try something like \"land **more headshots** on **moving targets** as Widow.\"",
   "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
