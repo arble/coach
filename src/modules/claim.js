@@ -9,7 +9,9 @@ module.exports = ({ bot, knex, config, commands }) => {
     const catStr = `${username}#${msg.author.discriminator}`;
 
     // only allow claiming of threads that are still in "Waiting Threads" if this property is defined
-    if ((msg.channel.parentID !== config.categoryAutomation.waitingThread) && config.categoryAutomation.waitingThread) return;
+
+    // For the time being, don't do this check. We've redesigned the threading system
+    // if ((msg.channel.parentID !== config.categoryAutomation.waitingThread) && config.categoryAutomation.waitingThread) return;
 
     const targetCategory = msg.channel.guild.channels.find(c => {
       return (c instanceof Eris.CategoryChannel) && (c.name === catStr);
