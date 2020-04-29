@@ -274,7 +274,7 @@ class Thread {
         try {
           await bot.editChannel(this.channel_id, {
             parentID: categories[0].id,
-            name: `${userPlatform}-${userRank}-${userRole}`.toLowerCase();
+            name: `${userPlatform}-${userRank}-${userRole}`.toLowerCase()
           });
         } catch (e) {
           this.postSystemMessage(`Failed to move thread: ${e.message}`);
