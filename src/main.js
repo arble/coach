@@ -221,11 +221,17 @@ function initBaseMessageHandlers() {
       await knex('threads')
       .where('id', thread.id)
       .update({
+        gather_platform: emoji.name,
         gather_rank: reply.id,
         gather_state: THREAD_GATHER_INFO.RANK
       });
-      await bot.addMessageReaction(reply.channel.id, reply.id, '😂');
-      await bot.addMessageReaction(reply.channel.id, reply.id, '😭');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Bronze:230382770046763008');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Silver:230382791957676033');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Gold:230382810811203584');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Platinum:230382825914892289');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Diamond:230382847213568003');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.RANK && thread.gather_rank === msg.id) {
@@ -233,6 +239,7 @@ function initBaseMessageHandlers() {
       await knex('threads')
       .where('id', thread.id)
       .update({
+        gather_rank: emoji.name,
         gather_choice: reply.id,
         gather_state: THREAD_GATHER_INFO.CHOICE
       });
@@ -246,7 +253,7 @@ function initBaseMessageHandlers() {
       await knex('threads')
       .where('id', thread.id)
       .update({
-        //gather_request: content,
+        gather_choice: emoji.name,
         gather_state: THREAD_GATHER_INFO.COMPLETE
       });
       thread.postToUser(config.gatherCompleteMessage);
@@ -263,13 +270,13 @@ function initBaseMessageHandlers() {
 
 Please remember to "!claim" this request if you take it on.
       `;
-      const dmChan = await thread.getDMChannel();
-      let message = await bot.getMessage(dmChan.id, thread.gather_platform);
-      console.log(message.reactions);
-      message = await bot.getMessage(dmChan.id, thread.gather_rank);
-      console.log(message.reactions);
-      message = await bot.getMessage(dmChan.id, thread.gather_choice);
-      console.log(message.reactions);
+      // const dmChan = await thread.getDMChannel();
+      // let message = await bot.getMessage(dmChan.id, thread.gather_platform);
+      // console.log(message.reactions);
+      // message = await bot.getMessage(dmChan.id, thread.gather_rank);
+      // console.log(message.reactions);
+      // message = await bot.getMessage(dmChan.id, thread.gather_choice);
+      // console.log(message.reactions);
 
       const requestMessage = await bot.createMessage(thread.channel_id, {
         content: userInfo,
