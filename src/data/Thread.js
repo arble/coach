@@ -223,7 +223,7 @@ class Thread {
         // proceed as normal back and forth
         break;
       case THREAD_GATHER_INFO.REQUEST:
-        finishSurvey(content);
+        this.finishSurvey(content);
     }
 
     if (this.scheduled_close_at) {
