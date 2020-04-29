@@ -263,7 +263,7 @@ function getInboxMention() {
   return mentions.join(' ') + ' ';
 }
 
-function clearOtherUserReactions(message, emoji, userId) {
+async function clearOtherUserReactions(message, reaction, userId) {
   for (let reaction in message.reactions) {
     if (reaction === emoji) continue;
     val = message.reactions[reaction];
@@ -273,7 +273,7 @@ function clearOtherUserReactions(message, emoji, userId) {
   }
 }
 
-function getUserReactionChoice(chanId, msgId) {
+async function getUserReactionChoice(chanId, msgId) {
   const msg = await bot.getMessage(chanId, msgId);
   for (let rct in msg.reactions) {
     val = msg.reactions[rct];
