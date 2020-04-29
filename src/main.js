@@ -220,7 +220,7 @@ function initBaseMessageHandlers() {
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
     if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && thread.gather_platform === msg.id) {
-      const reply = thread.postToUser(config.gatherRankMessage);
+      const reply = await thread.postToUser(config.gatherRankMessage);
       await knex('threads')
       .where('id', thread.id)
       .update({
@@ -232,7 +232,7 @@ function initBaseMessageHandlers() {
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.RANK && thread.gather_rank === msg.id) {
-      const reply = thread.postToUser(config.gatherChoiceMessage);
+      const reply = await thread.postToUser(config.gatherChoiceMessage);
       await knex('threads')
       .where('id', thread.id)
       .update({
