@@ -210,9 +210,12 @@ function initBaseMessageHandlers() {
   });
 
   bot.on('messageReactionAdd', async (msg, emoji, userId) => {
-    if (!msg.channel instanceof Eris.PrivateChannel) return;
+    if (!(msg.channel instanceof Eris.PrivateChannel)) return;
+    console.log(userId);
     if (userId === bot.user.id) return;
     let thread = await threads.findOpenThreadByUserId(msg.author.id);
+    console.log('looked up thread');
+    console.log(thread);
     if (!thread) return;
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
