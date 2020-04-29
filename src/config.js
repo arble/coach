@@ -90,6 +90,7 @@ const defaultConfig = {
   "gatherTimeout": null, // minutes
   "apologyMessage": null,
   "apologyTimeout": null, // minutes
+  "platformChoiceReactions": [],
 
   "newThreadCategoryId": null,
   "mentionRole": "here",
