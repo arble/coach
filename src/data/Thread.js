@@ -194,17 +194,6 @@ class Thread {
 
     // handle the gather info states, if applicable
 
-    if (utils.equalsIC(content, "restart") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
-      await knex('threads')
-      .where('id', this.id)
-      .update({
-        gather_state: THREAD_GATHER_INFO.PLATFORM
-      });
-      this.postToUser(config.gatherRestartMessage);
-      this.postSystemMessage("User restarted info collection.");
-      return;
-    }
-
     if (utils.equalsIC(content, "cancel") && this.gather_state < THREAD_GATHER_INFO.COMPLETE) {
       await messageQueue.add(async () => {
         this.postToUser(config.gatherCancelmessage);

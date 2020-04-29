@@ -172,8 +172,11 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
       .update({
         gather_platform: reply.id,
       });
-      await bot.addMessageReaction(reply.channel.id, reply.id, '😂');
-      await bot.addMessageReaction(reply.channel.id, reply.id, '😭');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'PC:705126561577304155');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'PS4:705126812115664946');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Xbox:705126811792703581');
+      await bot.addMessageReaction(reply.channel.id, reply.id, 'Switch:705125842824593478');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '❌');
     } catch (err) {
       responseMessageError = err;
     }

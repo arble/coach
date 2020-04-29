@@ -233,6 +233,18 @@ function initBaseMessageHandlers() {
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
       }
+      if (thread.gather_state < THREAD_GATHER_INFO.COMPLETE && emoji.name === '❌') {
+        await messageQueue.add(async () => {
+          thread.postToUser(config.gatherCancelmessage);
+          await thread.close(true);
+        });
+        const logUrl = await thread.getLogUrl();
+        utils.postLog(utils.trimAll(`
+          Coach thread with ${thread.user_name} (${thread.user_id}) was cancelled by the user before supplying survey info.
+          Logs: ${logUrl}
+        `));
+        return;
+      }
       //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
@@ -264,7 +276,7 @@ function initBaseMessageHandlers() {
       //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
-    if (thread.gather_state === THREAD_GATHER_INFO.INCOMPLETE && emoji.name === '✔️') {
+    if (thread.gather_state === THREAD_GATHER_INFO.INCOMPLETE && emoji.name === '✅') {
       thread.finishSurvey(null);
     }
   });

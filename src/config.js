@@ -74,9 +74,9 @@ const defaultConfig = {
 
   "gatherPlatformMessage": "Welcome to the /r/Overwatch CoachMail bot. I'm going to ask you a few questions so that the right kind of " +
   "coach can help you. Answer the questions by reacting to the appropriate emoji underneath. At any time during these questions, " +
-  "react to the ❌ to cancel the coaching session entirely, or ⏪ to start these questions again. What **platform** do you play on?",
-  "gatherRankMessage": "What's your **rank**? You can give me an **SR number** or a **rank tier** (e.g. **Gold**).",
-  "gatherChoiceMessage": "Which **role** would you like coaching on? If you're looking for something not tied to a specific role, answer 'none'",
+  "react to the ❌ on this message to cancel the session. What **platform** do you play on?",
+  "gatherRankMessage": "What's your **rank**?,""
+  "gatherChoiceMessage": "Which **role** would you like coaching for?",
   "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
   "\"get good at Widow\" try something like \"land **more headshots** on **moving targets** as Widow.\"",
   "gatherIncompleteMessage": "You didn't respond to all the questions. Make a selection for each, and then react to ✅ on this message.",
@@ -84,7 +84,6 @@ const defaultConfig = {
   "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
   "things like links to videos you would like reviewed, you can send them right away.",
   "userCanCloseMessage": "You can choose to end the session early at any time by typing !close in this window.",
-  "gatherRestartMessage": "OK. Let's start over. What **platform** do you play on?",
   "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again!",
   "gatherTimeoutMessage": "Your session has timed out because you didn't answer the initial questions. You can start another at any time " +
   "by messaging me again.",
