@@ -227,8 +227,8 @@ function initBaseMessageHandlers() {
         gather_rank: reply.id,
         gather_state: THREAD_GATHER_INFO.RANK
       });
-      await bot.addMessageReaction(msg.channel.id, msg.id, '😂');
-      await bot.addMessageReaction(msg.channel.id, msg.id, '😭');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '😂');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '😭');
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.RANK && thread.gather_rank === msg.id) {
@@ -239,8 +239,8 @@ function initBaseMessageHandlers() {
         gather_choice: reply.id,
         gather_state: THREAD_GATHER_INFO.CHOICE
       });
-      await bot.addMessageReaction(msg.channel.id, msg.id, '✔️');
-      await bot.addMessageReaction(msg.channel.id, msg.id, '❌');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '✔️');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '❌');
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && thread.gather_choice === msg.id) {
