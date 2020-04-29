@@ -218,13 +218,8 @@ class Thread {
       return;
     }
 
-    switch (this.gather_state) {
-      case THREAD_GATHER_INFO.COMPLETE:
-        // proceed as normal back and forth
-        break;
-      case THREAD_GATHER_INFO.REQUEST:
-        this.finishSurvey(content);
-        break;
+    if (this.gather_state === THREAD_GATHER_INFO.REQUEST) {
+      this.finishSurvey(content);
     }
 
     if (this.scheduled_close_at) {
