@@ -266,7 +266,7 @@ function initBaseMessageHandlers() {
 
       **Platform:** ${thread.gather_platform}
       **Rank:** ${thread.gather_rank}
-      **Hero/Role Choice:** ${thread.gather_choice}
+      **Role:** ${emoji.name}
 
 Please remember to "!claim" this request if you take it on.
       `;
