@@ -31,7 +31,7 @@ const auto = require('./modules/auto');
 const claim = require('./modules/claim');
 const sub = require('./modules/sub');
 
-const {ACCIDENTAL_THREAD_MESSAGES} = require('./data/constants');
+const {ACCIDENTAL_THREAD_MESSAGES, THREAD_MESSAGE_TYPE, THREAD_STATUS, THREAD_GATHER_INFO} = require('./data/constants');
 
 module.exports = {
   async start() {
