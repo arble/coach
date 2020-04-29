@@ -263,6 +263,27 @@ function getInboxMention() {
   return mentions.join(' ') + ' ';
 }
 
+function clearOtherUserReactions(message, emoji, userId) {
+  for (let reaction in message.reactions) {
+    if (reaction === emoji) continue;
+    val = message.reactions[reaction];
+    if (val.count > 1) {
+      await bot.removeMessageReaction(message.channel.id, message.id, reaction, userId);
+    }
+  }
+}
+
+function getUserReactionChoice(chanId, msgId) {
+  const msg = await bot.getMessage(chanId, msgId);
+  for (let rct in msg.reactions) {
+    val = msg.reactions[rct];
+    if (val.count > 1) {
+      return (rct.split(':'))[0];
+    }
+  }
+  return null;
+}
+
 function postSystemMessageWithFallback(channel, thread, text) {
   if (thread) {
     thread.postSystemMessage(text);
@@ -317,12 +338,8 @@ function equalsIC(str, other) {
 function roleToCategory(role) {
   switch (role.toLowerCase()) {
     case 'support':
-    case 'healer':
       return config.categoryAutomation.supportThread;
     case 'damage':
-    case 'dps':
-    case 'offense':
-    case 'defense':
       return config.categoryAutomation.damageThread;
     case 'tank':
       return config.categoryAutomation.tankThread;
@@ -368,5 +385,6 @@ module.exports = {
   escapeMarkdown,
   disableCodeBlocks,
   equalsIC,
-  roleToCategory
+  roleToCategory,
+  clearOtherUserReactions
 };

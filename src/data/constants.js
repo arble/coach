@@ -15,6 +15,7 @@ module.exports = {
   },
 
   THREAD_GATHER_INFO: {
+    INCOMPLETE: 0,
     PLATFORM:   1,
     RANK:       2,
     CHOICE:     3,

@@ -216,75 +216,58 @@ function initBaseMessageHandlers() {
     if (!thread) return;
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
-    if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && thread.gather_platform === msg.id) {
-      const reply = await thread.postToUser(config.gatherRankMessage);
-      await knex('threads')
-      .where('id', thread.id)
-      .update({
-        gather_platform: emoji.name,
-        gather_rank: reply.id,
-        gather_state: THREAD_GATHER_INFO.RANK
-      });
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Bronze:230382770046763008');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Silver:230382791957676033');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Gold:230382810811203584');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Platinum:230382825914892289');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Diamond:230382847213568003');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
-    }
-
-    if (thread.gather_state === THREAD_GATHER_INFO.RANK && thread.gather_rank === msg.id) {
-      const reply = await thread.postToUser(config.gatherChoiceMessage);
-      await knex('threads')
-      .where('id', thread.id)
-      .update({
-        gather_rank: emoji.name,
-        gather_choice: reply.id,
-        gather_state: THREAD_GATHER_INFO.CHOICE
-      });
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Damage:683860120182325248');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120211554313');
-      await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120253366303');
-    }
-
-    if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && thread.gather_choice === msg.id) {
-      console.log(emoji);
-      await knex('threads')
-      .where('id', thread.id)
-      .update({
-        gather_choice: emoji.name,
-        gather_state: THREAD_GATHER_INFO.COMPLETE
-      });
-      thread.postToUser(config.gatherCompleteMessage);
-      if (config.allowUserClose) {
-        thread.postToUser(config.userCanCloseMessage);
+    if (thread.gather_platform === msg.id) {
+      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM) {
+        const reply = await thread.postToUser(config.gatherRankMessage);
+        await knex('threads')
+        .where('id', thread.id)
+        .update({
+          gather_rank: reply.id,
+          gather_state: THREAD_GATHER_INFO.RANK
+        });
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Bronze:230382770046763008');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Silver:230382791957676033');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Gold:230382810811203584');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Platinum:230382825914892289');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Diamond:230382847213568003');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
       }
-
-      const mention = utils.getInboxMention();
-      const userInfo = `${mention}New coaching request:
-
-      **Platform:** ${thread.gather_platform}
-      **Rank:** ${thread.gather_rank}
-      **Role:** ${emoji.name}
-
-Please remember to "!claim" this request if you take it on.
-      `;
-      // const dmChan = await thread.getDMChannel();
-      // let message = await bot.getMessage(dmChan.id, thread.gather_platform);
-      // console.log(message.reactions);
-      // message = await bot.getMessage(dmChan.id, thread.gather_rank);
-      // console.log(message.reactions);
-      // message = await bot.getMessage(dmChan.id, thread.gather_choice);
-      // console.log(message.reactions);
-
-      const requestMessage = await bot.createMessage(thread.channel_id, {
-        content: userInfo,
-        disableEveryone: false,
-      });
-      bot.pinMessage(thread.channel_id, requestMessage.id);
+      await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
+    if (thread.gather_rank === msg.id) {
+      if (thread.gather_state === THREAD_GATHER_INFO.RANK) {
+        const reply = await thread.postToUser(config.gatherChoiceMessage);
+        await knex('threads')
+        .where('id', thread.id)
+        .update({
+          gather_choice: reply.id,
+          gather_state: THREAD_GATHER_INFO.CHOICE
+        });
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Damage:683860120182325248');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120211554313');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120253366303');
+      }
+      await utils.clearOtherUserReactions(msg, emoji, userId);
+    }
+
+    if (thread.gather_choice === msg.id) {
+      if (thread.gather_state === THREAD_GATHER_INFO.CHOICE) {
+        const reply = await thread.postToUser(config.gatherRequestMessage);
+        console.log(emoji);
+        await knex('threads')
+        .where('id', thread.id)
+        .update({
+          gather_state: THREAD_GATHER_INFO.REQUEST
+        });
+      }
+      await utils.clearOtherUserReactions(msg, emoji, userId);
+    }
+
+    if (thread.gather_state === THREAD_GATHER_INFO.INCOMPLETE && emoji.name === '✔️') {
+      thread.finishSurvey(null);
+    }
   });
 }
 

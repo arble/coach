@@ -222,84 +222,8 @@ class Thread {
       case THREAD_GATHER_INFO.COMPLETE:
         // proceed as normal back and forth
         break;
-      case THREAD_GATHER_INFO.PLATFORM:
-        const msg = await this.postToUser(config.gatherRankMessage);
-        await knex('threads')
-          .where('id', this.id)
-          .update({
-            gather_platform: msg.id,
-            gather_state: THREAD_GATHER_INFO.RANK
-          });
-          bot.addMessageReaction(msg.channel.id, msg.id, '😂');
-        break;
-      case THREAD_GATHER_INFO.RANK:
-        await knex('threads')
-        .where('id', this.id)
-        .update({
-          gather_rank: content,
-          gather_state: THREAD_GATHER_INFO.CHOICE
-        });
-        this.postToUser(config.gatherChoiceMessage);
-        break;
-      case THREAD_GATHER_INFO.CHOICE:
-        await knex('threads')
-        .where('id', this.id)
-        .update({
-          gather_choice: content,
-          gather_state: THREAD_GATHER_INFO.REQUEST
-        });
-        this.postToUser(config.gatherRequestMessage);
-        break;
       case THREAD_GATHER_INFO.REQUEST:
-        await knex('threads')
-        .where('id', this.id)
-        .update({
-          gather_request: content,
-          gather_state: THREAD_GATHER_INFO.COMPLETE
-        });
-        this.postToUser(config.gatherCompleteMessage);
-        if (config.allowUserClose) {
-          this.postToUser(config.userCanCloseMessage);
-        }
-
-        const targetCategory = utils.roleToCategory(this.gather_choice);
-
-        if (targetCategory) {
-          // sanity check the config entry
-          const categories = utils.getInboxGuild().channels.filter(c => {
-            return (c instanceof Eris.CategoryChannel) && (targetCategory == c.id);
-          });
-
-          // this behaviour allows staff to mute the new request category where users are still giving info
-          if (categories.length > 0) {
-            try {
-              await bot.editChannel(this.channel_id, {
-                parentID: categories[0].id
-              });
-            } catch (e) {
-              this.postSystemMessage(`Failed to move thread: ${e.message}`);
-            }
-          }
-        }
-
-        // we use content rather than this.gather_request below because it won't populate immediately
-        const mention = utils.getInboxMention();
-        const userInfo = `${mention}New coaching request:
-
-        **Platform:** ${this.gather_platform}
-        **Rank:** ${this.gather_rank}
-        **Hero/Role Choice:** ${this.gather_choice}
-        **Coaching Request:** ${content}
-
-Please remember to "!claim" this request if you take it on.
-        `;
-
-        const requestMessage = await bot.createMessage(this.channel_id, {
-          content: userInfo,
-          disableEveryone: false,
-        });
-        bot.pinMessage(this.channel_id, requestMessage.id);
-        break;
+        finishSurvey(content);
     }
 
     if (this.scheduled_close_at) {
@@ -311,6 +235,85 @@ Please remember to "!claim" this request if you take it on.
       await this.setAlert(null);
       await this.postSystemMessage(`<@!${this.alert_id}> New message from ${this.user_name}`);
     }
+  }
+
+  function finishSurvey(content) {
+    // Look back over the survey messages to get user choices
+    const dmChan = await this.getDMChannel();
+    const completed = true;
+    const userPlatform = utils.getUserReactionChoice(dmChan.id, this.gather_platform);
+    if (!userPlatform) {
+      completed = false;
+    }
+    const userRank = utils.getUserReactionChoice(dmChan.id, this.gather_rank);
+    if (!userRank) {
+      completed = false;
+    }
+    const userRole = utils.getUserReactionChoice(dmChan.id, this.gather_choice);
+    if (!userRole) {
+      completed = false;
+    }
+    if (!completed) {
+      const reply = await this.postToUser(config.gatherIncompleteMessage);
+      await knex('threads')
+      .where('id', this.id)
+      .update({
+        gather_request: content ? content : this.gather_request
+        gather_state: THREAD_GATHER_INFO.INCOMPLETE
+      });
+      await bot.addMessageReaction(reply.channel.id, reply.id, '✔️');
+      return;
+    }
+
+    await knex('threads')
+    .where('id', this.id)
+    .update({
+      gather_request: content,
+      gather_state: THREAD_GATHER_INFO.COMPLETE
+    });
+    this.postToUser(config.gatherCompleteMessage);
+    if (config.allowUserClose) {
+      this.postToUser(config.userCanCloseMessage);
+    }
+
+    const targetCategory = utils.roleToCategory(userRole);
+
+    if (targetCategory) {
+      // sanity check the config entry
+      const categories = utils.getInboxGuild().channels.filter(c => {
+        return (c instanceof Eris.CategoryChannel) && (targetCategory == c.id);
+      });
+
+      // this behaviour allows staff to mute the new request category where users are still giving info
+      if (categories.length > 0) {
+        try {
+          await bot.editChannel(this.channel_id, {
+            parentID: categories[0].id
+          });
+        } catch (e) {
+          this.postSystemMessage(`Failed to move thread: ${e.message}`);
+        }
+      }
+    }
+
+    // we use content rather than this.gather_request below because it won't populate immediately
+    const mention = utils.getInboxMention();
+    const userInfo = `${mention}New coaching request:
+
+    **Platform:** ${userPlatform}
+    **Rank:** ${userRank}
+    **Hero/Role Choice:** ${userRole}
+    **Coaching Request:** ${content}
+
+Please remember to "!claim" this request if you take it on.
+    `;
+
+    const requestMessage = await bot.createMessage(this.channel_id, {
+      content: userInfo,
+      disableEveryone: false,
+    });
+    bot.pinMessage(this.channel_id, requestMessage.id);
+    break;
   }
 
   /**
