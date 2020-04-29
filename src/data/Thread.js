@@ -224,6 +224,7 @@ class Thread {
         break;
       case THREAD_GATHER_INFO.REQUEST:
         this.finishSurvey(content);
+        break;
     }
 
     if (this.scheduled_close_at) {
