@@ -213,7 +213,7 @@ function initBaseMessageHandlers() {
     if (!(msg.channel instanceof Eris.PrivateChannel)) return;
     console.log(userId);
     if (userId === bot.user.id) return;
-    let thread = await threads.findOpenThreadByUserId(msg.author.id);
+    let thread = await threads.findOpenThreadByUserId(userId);
     console.log('looked up thread');
     console.log(thread);
     if (!thread) return;
