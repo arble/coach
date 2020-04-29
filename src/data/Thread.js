@@ -257,7 +257,7 @@ class Thread {
         gather_request: content ? content : this.gather_request,
         gather_state: THREAD_GATHER_INFO.INCOMPLETE
       });
-      await bot.addMessageReaction(reply.channel.id, reply.id, '✔️');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '✅');
       return;
     }
 
