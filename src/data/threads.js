@@ -172,7 +172,8 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
       .update({
         gather_platform: reply.id,
       });
-      for (platformEmoji in config.platformChoiceReactions) {
+
+      for (platformEmoji of config.platformChoiceReactions) {
         await bot.addMessageReaction(reply.channel.id, reply.id, platformEmoji);
       }
 
