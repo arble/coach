@@ -264,7 +264,7 @@ class Thread {
     await knex('threads')
     .where('id', this.id)
     .update({
-      gather_request: content,
+      gather_request: content ? content : this.gather_request,
       gather_state: THREAD_GATHER_INFO.COMPLETE
     });
     this.postToUser(config.gatherCompleteMessage);
