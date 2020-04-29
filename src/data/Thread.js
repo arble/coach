@@ -309,7 +309,6 @@ Please remember to "!claim" this request if you take it on.
       disableEveryone: false,
     });
     bot.pinMessage(this.channel_id, requestMessage.id);
-    break;
   }
 
   /**
