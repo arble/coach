@@ -257,9 +257,9 @@ function initBaseMessageHandlers() {
           gather_choice: reply.id,
           gather_state: THREAD_GATHER_INFO.CHOICE
         });
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120253366303');
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Damage:683860120182325248');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120211554313');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120253366303');
+        await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120211554313');
       }
       //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
