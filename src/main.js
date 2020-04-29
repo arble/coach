@@ -233,7 +233,7 @@ function initBaseMessageHandlers() {
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
       }
-      await utils.clearOtherUserReactions(msg, emoji, userId);
+      //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
     if (thread.gather_rank === msg.id) {
@@ -249,7 +249,7 @@ function initBaseMessageHandlers() {
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120211554313');
         await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120253366303');
       }
-      await utils.clearOtherUserReactions(msg, emoji, userId);
+      //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
     if (thread.gather_choice === msg.id) {
@@ -262,7 +262,7 @@ function initBaseMessageHandlers() {
           gather_state: THREAD_GATHER_INFO.REQUEST
         });
       }
-      await utils.clearOtherUserReactions(msg, emoji, userId);
+      //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.INCOMPLETE && emoji.name === '✔️') {
