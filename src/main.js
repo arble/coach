@@ -262,9 +262,8 @@ function initBaseMessageHandlers() {
 
 Please remember to "!claim" this request if you take it on.
       `;
-      const dmChan = thread.getDMChannel();
-      //let message = await bot.getMessage(dmChan.id, thread.gather_platform);
-      let message = dmChan.getMessage(thread.gather_platform);
+      const dmChan = await thread.getDMChannel();
+      let message = await bot.getMessage(dmChan.id, thread.gather_platform);
       console.log(message.reactions);
       message = await bot.getMessage(dmChan.id, thread.gather_rank);
       console.log(message.reactions);
