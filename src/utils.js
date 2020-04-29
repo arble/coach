@@ -336,12 +336,12 @@ function equalsIC(str, other) {
 }
 
 function roleToCategory(role) {
-  switch (role.toLowerCase()) {
-    case 'support':
+  switch (role) {
+    case 'Support':
       return config.categoryAutomation.supportThread;
-    case 'damage':
+    case 'Damage':
       return config.categoryAutomation.damageThread;
-    case 'tank':
+    case 'Tank':
       return config.categoryAutomation.tankThread;
     default:
       return config.categoryAutomation.waitingThread;
