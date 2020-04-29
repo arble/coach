@@ -166,7 +166,14 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   if (!quiet) {
     try {
-      await newThread.postToUser(config.gatherPlatformMessage);
+      const reply = await newThread.postToUser(config.gatherPlatformMessage);
+      await knex('threads')
+      .where('id', newThread.id)
+      .update({
+        gather_platform: reply.id,
+      });
+      await bot.addMessageReaction(reply.channel.id, reply.id, '😂');
+      await bot.addMessageReaction(reply.channel.id, reply.id, '😭');
     } catch (err) {
       responseMessageError = err;
     }

@@ -223,13 +223,14 @@ class Thread {
         // proceed as normal back and forth
         break;
       case THREAD_GATHER_INFO.PLATFORM:
+        const msg = await this.postToUser(config.gatherRankMessage);
         await knex('threads')
-        .where('id', this.id)
-        .update({
-          gather_platform: content,
-          gather_state: THREAD_GATHER_INFO.RANK
-        });
-        this.postToUser(config.gatherRankMessage);
+          .where('id', this.id)
+          .update({
+            gather_platform: msg.id,
+            gather_state: THREAD_GATHER_INFO.RANK
+          });
+          bot.addMessageReaction(msg.channel.id, msg.id, '😂');
         break;
       case THREAD_GATHER_INFO.RANK:
         await knex('threads')
@@ -311,6 +312,75 @@ Please remember to "!claim" this request if you take it on.
       await this.postSystemMessage(`<@!${this.alert_id}> New message from ${this.user_name}`);
     }
   }
+
+  bot.on('messageReactionAdd', async (msg, emoji, userId) => {
+    if (msg.channel !instanceof PrivateChannel) return;
+    let thread = await threads.findOpenThreadByUserId(msg.author.id);
+    if (!thread) return;
+    if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
+
+    if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && thread.gather_platform === msg.id) {
+      const reply = this.postToUser(config.gatherRankMessage);
+      await knex('threads')
+      .where('id', this.id)
+      .update({
+        gather_rank: reply.id,
+        gather_state: THREAD_GATHER_INFO.RANK
+      });
+      await bot.addMessageReaction(msg.channel.id, msg.id, '😂');
+      await bot.addMessageReaction(msg.channel.id, msg.id, '😭');
+    }
+
+    if (thread.gather_state === THREAD_GATHER_INFO.RANK && thread.gather_rank === msg.id) {
+      const reply = this.postToUser(config.gatherChoiceMessage);
+      await knex('threads')
+      .where('id', this.id)
+      .update({
+        gather_choice: reply.id,
+        gather_state: THREAD_GATHER_INFO.CHOICE
+      });
+      await bot.addMessageReaction(msg.channel.id, msg.id, '✔️');
+      await bot.addMessageReaction(msg.channel.id, msg.id, '❌');
+    }
+
+    if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && thread.gather_choice === msg.id) {
+      console.log(emoji);
+      await knex('threads')
+      .where('id', this.id)
+      .update({
+        //gather_request: content,
+        gather_state: THREAD_GATHER_INFO.COMPLETE
+      });
+      this.postToUser(config.gatherCompleteMessage);
+      if (config.allowUserClose) {
+        this.postToUser(config.userCanCloseMessage);
+      }
+
+      const mention = utils.getInboxMention();
+      const userInfo = `${mention}New coaching request:
+
+      **Platform:** ${this.gather_platform}
+      **Rank:** ${this.gather_rank}
+      **Hero/Role Choice:** ${this.gather_choice}
+
+Please remember to "!claim" this request if you take it on.
+      `;
+
+      let message = await bot.getMessage(this.channel_id, this.gather_platform);
+      console.log(message.reactions);
+      message = await bot.getMessage(this.channel_id, this.gather_rank);
+      console.log(message.reactions);
+      message = await bot.getMessage(this.channel_id, this.gather_choice);
+      console.log(message.reactions);
+
+      const requestMessage = await bot.createMessage(this.channel_id, {
+        content: userInfo,
+        disableEveryone: false,
+      });
+      bot.pinMessage(this.channel_id, requestMessage.id);
+    }
+
+  });
 
   /**
    * @returns {Promise<PrivateChannel>}
