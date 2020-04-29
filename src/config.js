@@ -247,6 +247,14 @@ if (! Array.isArray(finalConfig['inboxServerPermission'])) {
   }
 }
 
+if (! Array.isArray(finalConfig['platformChoiceReactions'])) {
+  if (finalConfig['platformChoiceReactions'] == null) {
+    finalConfig['platformChoiceReactions'] = [];
+  } else {
+    finalConfig['platformChoiceReactions'] = [finalConfig['platformChoiceReactions']];
+  }
+}
+
 // Move greetingMessage/greetingAttachment to the guildGreetings object internally
 // Or, in other words, if greetingMessage and/or greetingAttachment is set, it is applied for all servers that don't
 // already have something set up in guildGreetings. This retains backwards compatibility while allowing you to override
