@@ -262,8 +262,9 @@ function initBaseMessageHandlers() {
 
 Please remember to "!claim" this request if you take it on.
       `;
-
+      console.log(userInfo);
       let message = await bot.getMessage(thread.channel_id, thread.gather_platform);
+      console.log(message.content);
       console.log(message.reactions);
       message = await bot.getMessage(thread.channel_id, thread.gather_rank);
       console.log(message.reactions);
