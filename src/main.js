@@ -255,7 +255,6 @@ function initBaseMessageHandlers() {
     if (thread.gather_choice === msg.id) {
       if (thread.gather_state === THREAD_GATHER_INFO.CHOICE) {
         const reply = await thread.postToUser(config.gatherRequestMessage);
-        console.log(emoji);
         await knex('threads')
         .where('id', thread.id)
         .update({
