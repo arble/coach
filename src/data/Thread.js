@@ -237,7 +237,7 @@ class Thread {
     }
   }
 
-  function finishSurvey(content) {
+  async finishSurvey(content) {
     // Look back over the survey messages to get user choices
     const dmChan = await this.getDMChannel();
     const completed = true;
