@@ -237,15 +237,15 @@ class Thread {
     // Look back over the survey messages to get user choices
     const dmChan = await this.getDMChannel();
     const completed = true;
-    const userPlatform = utils.getUserReactionChoice(dmChan.id, this.gather_platform);
+    const userPlatform = await utils.getUserReactionChoice(dmChan.id, this.gather_platform);
     if (!userPlatform) {
       completed = false;
     }
-    const userRank = utils.getUserReactionChoice(dmChan.id, this.gather_rank);
+    const userRank = await utils.getUserReactionChoice(dmChan.id, this.gather_rank);
     if (!userRank) {
       completed = false;
     }
-    const userRole = utils.getUserReactionChoice(dmChan.id, this.gather_choice);
+    const userRole = await utils.getUserReactionChoice(dmChan.id, this.gather_choice);
     if (!userRole) {
       completed = false;
     }
