@@ -91,6 +91,8 @@ const defaultConfig = {
   "apologyMessage": null,
   "apologyTimeout": null, // minutes
   "platformChoiceReactions": [],
+  "rankChoiceReactions": [],
+  "roleChoiceReactions": [],
 
   "newThreadCategoryId": null,
   "mentionRole": "here",

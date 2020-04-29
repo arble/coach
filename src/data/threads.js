@@ -176,7 +176,6 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
       for (platformEmoji of config.platformChoiceReactions) {
         await bot.addMessageReaction(reply.channel.id, reply.id, platformEmoji);
       }
-
       await bot.addMessageReaction(reply.channel.id, reply.id, '❌');
     } catch (err) {
       responseMessageError = err;

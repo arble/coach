@@ -217,22 +217,6 @@ function initBaseMessageHandlers() {
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
     if (thread.gather_platform === msg.id) {
-      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM) {
-        const reply = await thread.postToUser(config.gatherRankMessage);
-        await knex('threads')
-        .where('id', thread.id)
-        .update({
-          gather_rank: reply.id,
-          gather_state: THREAD_GATHER_INFO.RANK
-        });
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Bronze:230382770046763008');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Silver:230382791957676033');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Gold:230382810811203584');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Platinum:230382825914892289');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Diamond:230382847213568003');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Master:230383824771612674');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Grandmaster:230383862604234752');
-      }
       if (thread.gather_state < THREAD_GATHER_INFO.COMPLETE && emoji.name === '❌') {
         await messageQueue.add(async () => {
           thread.postToUser(config.gatherCancelmessage);
@@ -245,6 +229,19 @@ function initBaseMessageHandlers() {
         `));
         return;
       }
+      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM) {
+        const reply = await thread.postToUser(config.gatherRankMessage);
+        await knex('threads')
+        .where('id', thread.id)
+        .update({
+          gather_rank: reply.id,
+          gather_state: THREAD_GATHER_INFO.RANK
+        });
+        for (rankEmoji of config.rankChoiceReactions) {
+          await bot.addMessageReaction(reply.channel.id, reply.id, rankEmoji);
+        }
+      }
+
       //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
