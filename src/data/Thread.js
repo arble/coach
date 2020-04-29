@@ -236,7 +236,7 @@ class Thread {
   async finishSurvey(content) {
     // Look back over the survey messages to get user choices
     const dmChan = await this.getDMChannel();
-    const completed = true;
+    let completed = true;
     const userPlatform = await utils.getUserReactionChoice(dmChan.id, this.gather_platform);
     if (!userPlatform) {
       completed = false;
@@ -298,7 +298,7 @@ class Thread {
 
     **Platform:** ${userPlatform}
     **Rank:** ${userRank}
-    **Hero/Role Choice:** ${userRole}
+    **Role:** ${userRole}
     **Coaching Request:** ${content}
 
 Please remember to "!claim" this request if you take it on.
