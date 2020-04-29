@@ -211,11 +211,8 @@ function initBaseMessageHandlers() {
 
   bot.on('messageReactionAdd', async (msg, emoji, userId) => {
     if (!(msg.channel instanceof Eris.PrivateChannel)) return;
-    console.log(userId);
     if (userId === bot.user.id) return;
     let thread = await threads.findOpenThreadByUserId(userId);
-    console.log('looked up thread');
-    console.log(thread);
     if (!thread) return;
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
@@ -266,11 +263,11 @@ function initBaseMessageHandlers() {
 Please remember to "!claim" this request if you take it on.
       `;
 
-      let message = await bot.getMessage(this.channel_id, this.gather_platform);
+      let message = await bot.getMessage(thread.channel_id, thread.gather_platform);
       console.log(message.reactions);
-      message = await bot.getMessage(this.channel_id, this.gather_rank);
+      message = await bot.getMessage(thread.channel_id, thread.gather_rank);
       console.log(message.reactions);
-      message = await bot.getMessage(this.channel_id, this.gather_choice);
+      message = await bot.getMessage(thread.channel_id, thread.gather_choice);
       console.log(message.reactions);
 
       const requestMessage = await bot.createMessage(thread.channel_id, {
