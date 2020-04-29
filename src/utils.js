@@ -386,5 +386,6 @@ module.exports = {
   disableCodeBlocks,
   equalsIC,
   roleToCategory,
-  clearOtherUserReactions
+  clearOtherUserReactions,
+  getUserReactionChoice
 };
