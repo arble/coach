@@ -79,7 +79,7 @@ const defaultConfig = {
   "gatherChoiceMessage": "Which **role** would you like coaching on? If you're looking for something not tied to a specific role, answer 'none'",
   "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
   "\"get good at Widow\" try something like \"land **more headshots** on **moving targets** as Widow.\"",
-  "gatherIncompleteMessage": "You didn't respond to all the questions. Make a selection for each, and then react to ✔️ on this message."
+  "gatherIncompleteMessage": "You didn't respond to all the questions. Make a selection for each, and then react to ✔️ on this message.",
   "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
   "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
   "things like links to videos you would like reviewed, you can send them right away.",
