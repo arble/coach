@@ -263,7 +263,7 @@ function getInboxMention() {
   return mentions.join(' ') + ' ';
 }
 
-async function clearOtherUserReactions(message, reaction, userId) {
+async function clearOtherUserReactions(message, emoji, userId) {
   for (let reaction in message.reactions) {
     if (reaction === emoji) continue;
     val = message.reactions[reaction];
