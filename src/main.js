@@ -229,7 +229,7 @@ function initBaseMessageHandlers() {
         `));
         return;
       }
-      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM) {
+      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && config.platformChoiceReactions.includes(emoji)) {
         const reply = await thread.postToUser(config.gatherRankMessage);
         await knex('threads')
         .where('id', thread.id)
@@ -241,36 +241,28 @@ function initBaseMessageHandlers() {
           await bot.addMessageReaction(reply.channel.id, reply.id, rankEmoji);
         }
       }
-
-      //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
-    if (thread.gather_rank === msg.id) {
-      if (thread.gather_state === THREAD_GATHER_INFO.RANK) {
-        const reply = await thread.postToUser(config.gatherChoiceMessage);
-        await knex('threads')
-        .where('id', thread.id)
-        .update({
-          gather_choice: reply.id,
-          gather_state: THREAD_GATHER_INFO.CHOICE
-        });
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Tank:683860120253366303');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Damage:683860120182325248');
-        await bot.addMessageReaction(reply.channel.id, reply.id, 'Support:683860120211554313');
+    if (thread.gather_rank === msg.id && thread.gather_state === THREAD_GATHER_INFO.RANK && config.rankChoiceReactions.includes(emoji)) {
+      const reply = await thread.postToUser(config.gatherChoiceMessage);
+      await knex('threads')
+      .where('id', thread.id)
+      .update({
+        gather_choice: reply.id,
+        gather_state: THREAD_GATHER_INFO.CHOICE
+      });
+      for (roleEmoji of config.roleChoiceReactions) {
+        await bot.addMessageReaction(reply.channel.id, reply.id, roleEmoji);
       }
-      //await utils.clearOtherUserReactions(msg, emoji, userId);
     }
 
-    if (thread.gather_choice === msg.id) {
-      if (thread.gather_state === THREAD_GATHER_INFO.CHOICE) {
-        const reply = await thread.postToUser(config.gatherRequestMessage);
-        await knex('threads')
-        .where('id', thread.id)
-        .update({
-          gather_state: THREAD_GATHER_INFO.REQUEST
-        });
-      }
-      //await utils.clearOtherUserReactions(msg, emoji, userId);
+    if (thread.gather_choice === msg.id && thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(emoji)) {
+      const reply = await thread.postToUser(config.gatherRequestMessage);
+      await knex('threads')
+      .where('id', thread.id)
+      .update({
+        gather_state: THREAD_GATHER_INFO.REQUEST
+      });
     }
 
     if (thread.gather_state === THREAD_GATHER_INFO.INCOMPLETE && emoji.name === '✅') {
