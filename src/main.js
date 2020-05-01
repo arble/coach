@@ -229,7 +229,7 @@ function initBaseMessageHandlers() {
         `));
         return;
       }
-      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && config.platformChoiceReactions.includes(emoji)) {
+      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && config.platformChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
         const reply = await thread.postToUser(config.gatherRankMessage);
         await knex('threads')
         .where('id', thread.id)
@@ -243,7 +243,7 @@ function initBaseMessageHandlers() {
       }
     }
 
-    if (thread.gather_rank === msg.id && thread.gather_state === THREAD_GATHER_INFO.RANK && config.rankChoiceReactions.includes(emoji)) {
+    if (thread.gather_rank === msg.id && thread.gather_state === THREAD_GATHER_INFO.RANK && config.rankChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
       const reply = await thread.postToUser(config.gatherChoiceMessage);
       await knex('threads')
       .where('id', thread.id)
@@ -256,7 +256,7 @@ function initBaseMessageHandlers() {
       }
     }
 
-    if (thread.gather_choice === msg.id && thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(emoji)) {
+    if (thread.gather_choice === msg.id && thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
       const reply = await thread.postToUser(config.gatherRequestMessage);
       await knex('threads')
       .where('id', thread.id)
