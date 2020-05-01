@@ -289,7 +289,7 @@ class Thread {
     **Platform:** ${userPlatform}
     **Rank:** ${userRank}
     **Role:** ${userRole}
-    **Coaching Request:** ${content}
+    **Coaching Request:** ${content ? content : this.gather_request}
 
 Please remember to "!claim" this request if you take it on.
     `;
