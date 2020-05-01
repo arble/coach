@@ -286,6 +286,7 @@ class Thread {
     const mention = utils.getInboxMention();
     const userInfo = `${mention}New coaching request:
 
+    **Username:** ${this.user_name}
     **Platform:** ${userPlatform}
     **Rank:** ${userRank}
     **Role:** ${userRole}
