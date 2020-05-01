@@ -144,7 +144,10 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
   // Attempt to create the inbox channel for this thread
   let createdChannel;
   try {
-    createdChannel = await utils.getInboxGuild().createChannel(channelName, null, 'New coachmail thread', newThreadCategoryId);
+    createdChannel = await utils.getInboxGuild().createChannel(channelName, null, {
+      parentID: newThreadCategoryId,
+      reason: "New coachmail inbox thread"
+    });
   } catch (err) {
     console.error(`Error creating coachmail channel for ${user.username}#${user.discriminator}!`);
     throw err;
