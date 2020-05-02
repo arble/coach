@@ -292,7 +292,7 @@ class Thread {
     **Role:** ${userRole}
     **Coaching Request:** ${content ? content : this.gather_request}
 
-Please remember to "!claim" this request if you take it on.
+You can "!claim" this thread to move it to your own category on this server.
     `;
 
     const requestMessage = await bot.createMessage(this.channel_id, {
