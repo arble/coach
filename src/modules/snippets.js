@@ -70,6 +70,7 @@ module.exports = ({ bot, knex, config, commands }) => {
     args = args.map(arg => arg.value);
     const rendered = renderSnippet(snippet.body, args);
 
+    console.log(`sending snippet of length ${rendered.length}`);
     const replied = await thread.replyToUser(msg.member, rendered, [], isAnonymous);
     if (replied) msg.delete();
   });
