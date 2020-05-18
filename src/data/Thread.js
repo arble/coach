@@ -322,11 +322,8 @@ You can "!claim" this thread to move it to your own category on this server.
       throw new Error('Could not open DMs with the user. They may have blocked the bot or set their privacy settings higher.');
     }
 
-    console.log(`sending message of length ${text.length}`);
-
     // Send the DM
     const chunks = utils.chunk(text, 2000);
-    console.log(chunks);
     const messages = await Promise.all(chunks.map((chunk, i) => {
       return dmChannel.createMessage(
         chunk,

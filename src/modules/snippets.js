@@ -61,7 +61,8 @@ module.exports = ({ bot, knex, config, commands }) => {
     if (! thread) return;
 
     let [, trigger, rawArgs] = msg.content.slice(snippetPrefix.length).match(/(\S+)(?:\s+(.*))?/s);
-    trigger = trigger.toLowerCase();
+    // don't do this. The add, delete and edit commands don't either
+    // trigger = trigger.toLowerCase();
 
     const snippet = await snippets.get(trigger);
     if (! snippet) return;
@@ -70,7 +71,6 @@ module.exports = ({ bot, knex, config, commands }) => {
     args = args.map(arg => arg.value);
     const rendered = renderSnippet(snippet.body, args);
 
-    console.log(`sending snippet of length ${rendered.length}`);
     const replied = await thread.replyToUser(msg.member, rendered, [], isAnonymous);
     if (replied) msg.delete();
   });
