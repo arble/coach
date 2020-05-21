@@ -253,17 +253,17 @@ function convertDelayStringToMS(str) {
 
 function getInboxMention(role) {
   if (!config.mentionRole) {
-    return '@here';
+    return '@here ';
   }
   switch (role) {
     case 'Support':
-      return `<@&${config.mentionRole.support}>`;
+      return `<@&${config.mentionRole.support}> `;
     case 'Damage':
-      return `<@&${config.mentionRole.damage}>`;
+      return `<@&${config.mentionRole.damage}> `;
     case 'Tank':
-      return `<@&${config.mentionRole.tank}>`;
+      return `<@&${config.mentionRole.tank}> `;
     default:
-      return '@here';
+      return '@here ';
   }
 }
 
