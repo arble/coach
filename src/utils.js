@@ -251,16 +251,20 @@ function convertDelayStringToMS(str) {
   return ms;
 }
 
-function getInboxMention() {
-  const mentionRoles = Array.isArray(config.mentionRole) ? config.mentionRole : [config.mentionRole];
-  const mentions = [];
-  for (const role of mentionRoles) {
-    if (role == null) continue;
-    else if (role === 'here') mentions.push('@here');
-    else if (role === 'everyone') mentions.push('@everyone');
-    else mentions.push(`<@&${role}>`);
+function getInboxMention(role) {
+  if (!config.mentionRole) {
+    return '@here';
   }
-  return mentions.join(' ') + ' ';
+  switch (role) {
+    case 'Support':
+      return `<@&${config.mentionRole.support}>`;
+    case 'Damage':
+      return `<@&${config.mentionRole.damage}>`;
+    case 'Tank':
+      return `<@&${config.mentionRole.tank}>`;
+    default:
+      return '@here';
+  }
 }
 
 async function clearOtherUserReactions(message, emoji, userId) {

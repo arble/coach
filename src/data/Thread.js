@@ -283,7 +283,7 @@ class Thread {
     }
 
     // we use content rather than this.gather_request below because it won't populate immediately
-    const mention = utils.getInboxMention();
+    const mention = utils.getInboxMention(userRole);
     const userInfo = `${mention}New coaching request:
 
     **Username:** ${this.user_name}
