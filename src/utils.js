@@ -292,9 +292,11 @@ async function checkRoleCapacity(emoji) {
     return false;
   }
 
-  const foundCategory = getInboxGuild().channels.find(c => {
-    return (c instanceof Eris.CategoryChannel) && (c.id === category)
-  });
+  // const foundCategory = getInboxGuild().channels.find(c => {
+  //   return (c instanceof Eris.CategoryChannel) && (c.id === category)
+  // });
+
+  const foundCategory = bot.getChannel(category);
 
   if (!foundCategory) return false;
 
