@@ -230,7 +230,7 @@ function initBaseMessageHandlers() {
         return;
       }
       if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
-        if (!utils.checkRoleCapacity(msg, emoji.name)) {
+        if (!utils.checkRoleCapacity(emoji.name)) {
           await thread.postToUser(`Unfortunately, we don't have room for any more ${emoji.name} coaching sessions at the moment. ` +
         `Check out <#${config.coachInfoChannel}> for updates on when we'll have more room. I'll go ahead and close this session. Sorry!`);
         }

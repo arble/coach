@@ -277,7 +277,7 @@ async function clearOtherUserReactions(message, emoji, userId) {
   }
 }
 
-async function checkRoleCapacity(msg, emoji) {
+async function checkRoleCapacity(emoji) {
   let category, limit;
   if (emoji == "Damage") {
     category = config.categoryAutomation.damageThread;
@@ -292,7 +292,7 @@ async function checkRoleCapacity(msg, emoji) {
     return false;
   }
 
-  const foundCategory = msg.channel.guild.channels.find(c => {
+  const foundCategory = getInboxGuild().channels.find(c => {
     return (c instanceof Eris.CategoryChannel) && (c.id === category)
   });
 
