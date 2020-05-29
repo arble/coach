@@ -216,7 +216,7 @@ function initBaseMessageHandlers() {
     if (!thread) return;
     if (thread.gather_state === THREAD_GATHER_INFO.COMPLETE) return;
 
-    if (thread.gather_platform === msg.id) {
+    if (thread.gather_choice === msg.id) {
       if (thread.gather_state < THREAD_GATHER_INFO.COMPLETE && emoji.name === '❌') {
         await messageQueue.add(async () => {
           thread.postToUser(config.gatherCancelmessage);
@@ -229,7 +229,7 @@ function initBaseMessageHandlers() {
         `));
         return;
       }
-      if (thread.gather_state === THREAD_GATHER_INFO.PLATFORM && config.platformChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
+      if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
         const reply = await thread.postToUser(config.gatherRankMessage);
         await knex('threads')
         .where('id', thread.id)
@@ -244,19 +244,19 @@ function initBaseMessageHandlers() {
     }
 
     if (thread.gather_rank === msg.id && thread.gather_state === THREAD_GATHER_INFO.RANK && config.rankChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
-      const reply = await thread.postToUser(config.gatherChoiceMessage);
+      const reply = await thread.postToUser(config.gatherPlatformMessage);
       await knex('threads')
       .where('id', thread.id)
       .update({
-        gather_choice: reply.id,
-        gather_state: THREAD_GATHER_INFO.CHOICE
+        gather_platform: reply.id,
+        gather_state: THREAD_GATHER_INFO.PLATFORM
       });
       for (roleEmoji of config.roleChoiceReactions) {
         await bot.addMessageReaction(reply.channel.id, reply.id, roleEmoji);
       }
     }
 
-    if (thread.gather_choice === msg.id && thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
+    if (thread.gather_platform === msg.id && thread.gather_state === THREAD_GATHER_INFO.PLATFORM && config.platformChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
       const reply = await thread.postToUser(config.gatherRequestMessage);
       await knex('threads')
       .where('id', thread.id)

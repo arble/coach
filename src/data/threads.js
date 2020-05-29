@@ -160,7 +160,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
     user_name: `${user.username}#${user.discriminator}`,
     channel_id: createdChannel.id,
     created_at: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
-    gather_state: quiet ? THREAD_GATHER_INFO.COMPLETE : THREAD_GATHER_INFO.PLATFORM,
+    gather_state: quiet ? THREAD_GATHER_INFO.COMPLETE : THREAD_GATHER_INFO.CHOICE,
     autoreply: JSON.stringify({})
   });
 
@@ -169,15 +169,15 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   if (!quiet) {
     try {
-      const reply = await newThread.postToUser(config.gatherPlatformMessage);
+      const reply = await newThread.postToUser(config.gatherChoiceMessage);
       await knex('threads')
       .where('id', newThread.id)
       .update({
-        gather_platform: reply.id,
+        gather_choice: reply.id,
       });
 
-      for (platformEmoji of config.platformChoiceReactions) {
-        await bot.addMessageReaction(reply.channel.id, reply.id, platformEmoji);
+      for (roleEmoji of config.roleChoiceReactions) {
+        await bot.addMessageReaction(reply.channel.id, reply.id, roleEmoji);
       }
       await bot.addMessageReaction(reply.channel.id, reply.id, '❌');
     } catch (err) {
