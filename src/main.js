@@ -255,7 +255,7 @@ function initBaseMessageHandlers() {
         gather_platform: reply.id,
         gather_state: THREAD_GATHER_INFO.PLATFORM
       });
-      for (platformEmoji of config.paltformChoiceReactions) {
+      for (platformEmoji of config.platformChoiceReactions) {
         await bot.addMessageReaction(reply.channel.id, reply.id, platformEmoji);
       }
     }
