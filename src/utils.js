@@ -277,6 +277,30 @@ async function clearOtherUserReactions(message, emoji, userId) {
   }
 }
 
+async function checkRoleCapacity(msg, emoji) {
+  let category, limit;
+  if (emoji == "Damage") {
+    category = config.categoryAutomation.damageThread;
+    limit = config.categoryAutomation.damageLimit;
+  } else if (emoji == "Tank") {
+    category = config.categoryAutomation.tankThread;
+    limit = config.categoryAutomation.tankLimit;
+  } else if (emoji == "Support") {
+    category = config.categoryAutomation.supportThread;
+    limit = config.categoryAutomation.supportLimit;
+  } else {
+    return false;
+  }
+
+  const foundCategory = msg.channel.guild.channels.find(c => {
+    return (c instanceof Eris.CategoryChannel) && (c.id === category)
+  });
+
+  if (!foundCategory) return false;
+
+  return category.channels.size < limit;
+}
+
 async function getUserReactionChoice(chanId, msgId) {
   const msg = await bot.getMessage(chanId, msgId);
   for (let rct in msg.reactions) {
@@ -391,5 +415,6 @@ module.exports = {
   equalsIC,
   roleToCategory,
   clearOtherUserReactions,
-  getUserReactionChoice
+  getUserReactionChoice,
+  checkRoleCapacity
 };
