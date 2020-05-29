@@ -298,7 +298,7 @@ async function checkRoleCapacity(emoji) {
 
   if (!foundCategory) return false;
 
-  return category.channels.size < limit;
+  return foundCategory.channels.size < limit;
 }
 
 async function getUserReactionChoice(chanId, msgId) {
