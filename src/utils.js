@@ -378,6 +378,28 @@ function roleToCategory(role) {
   }
 }
 
+function isCoachingOpen() {
+  const now = moment.utc();
+  const offset = (now.week() % 3) - 1) * 480;
+  const thisWeekStart = moment.utc().utcOffset(offset).startOf('week').add(5, 'days');
+  const thisWeekEnd = moment.utc().utcOffset(offset).startOf('week').add(7, 'days');
+  return now.isBetween(thisWeekStart, thisWeekEnd);
+}
+
+function nextCoachingOpen() {
+  const now = moment.utc();
+  const offset = (now.week() % 3) - 1) * 480;
+  console.log(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'));
+  return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(5, 'days'))).as('milliseconds');
+}
+
+function nextCoachingClose() {
+  const now = moment.utc();
+  const offset = (now.week() % 3) - 1) * 480;
+  console.log(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'));
+  return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'))).as('milliseconds');
+}
+
 module.exports = {
   BotError,
 
@@ -418,5 +440,8 @@ module.exports = {
   roleToCategory,
   clearOtherUserReactions,
   getUserReactionChoice,
-  checkRoleCapacity
+  checkRoleCapacity,
+  isCoachingOpen,
+  nextCoachingOpen,
+  nextCoachingClose
 };

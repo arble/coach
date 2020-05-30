@@ -209,6 +209,9 @@ function initBaseMessageHandlers() {
     thread.deleteChatMessage(msg.id);
   });
 
+  utils.nextCoachingOpen();
+  utils.nextCoachingClose();
+
   bot.on('messageReactionAdd', async (msg, emoji, userId) => {
     if (!(msg.channel instanceof Eris.PrivateChannel)) return;
     if (userId === bot.user.id) return;
