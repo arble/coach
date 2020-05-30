@@ -386,18 +386,25 @@ function isCoachingOpen() {
   return now.isBetween(thisWeekStart, thisWeekEnd);
 }
 
-function nextCoachingOpen() {
+function nextCoachingOpen(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
-  console.log(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'));
-  return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(5, 'days'))).as('milliseconds');
+  if (duration) {
+    return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(5, 'days'))).as('milliseconds');
+  } else {
+    return moment.utc().utcOffset(offset).startOf('week').add(5, 'days');
+  }
+
 }
 
-function nextCoachingClose() {
+function nextCoachingClose(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
-  console.log(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'));
-  return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'))).as('milliseconds');
+  if (duration) {
+    return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(7, 'days'))).as('milliseconds');
+  } else {
+    return moment.utc().utcOffset(offset).startOf('week').add(7, 'days');
+  }
 }
 
 module.exports = {

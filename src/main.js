@@ -134,6 +134,12 @@ function initBaseMessageHandlers() {
         // Ignore messages that shouldn't usually open new threads, such as "ok", "thanks", etc.
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
+        if (!utils.isCoachingOpen()) {
+          await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
+          `Please check <#${config.coachInfoChannel}> for the next scheduled open time.`);
+          return;
+        }
+
         thread = await threads.createNewThreadForUser(msg.author);
         created = true;
       }
