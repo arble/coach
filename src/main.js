@@ -49,6 +49,12 @@ module.exports = {
       initBaseMessageHandlers();
       initPlugins();
 
+      if (utils.isCoachingOpen()) {
+        goOnline();
+      } else {
+        goOffline();
+      }
+
       console.log('');
       console.log('Done! Now listening to DMs.');
       console.log('');
@@ -70,6 +76,16 @@ function waitForGuild(guildId) {
       }
     });
   });
+}
+
+function goOnline() {
+  bot.editStatus("online");
+  setTimeout(goOffline, utils.nextCoachingClose(true) + 5000);
+}
+
+function goOffline() {
+  bot.editStatus("invisible");
+  setTimeout(goOnline, utils.nextCoachingOpen(true) + 5000);
 }
 
 function initStatus() {
