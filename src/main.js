@@ -80,12 +80,12 @@ function waitForGuild(guildId) {
 
 function goOnline() {
   bot.editStatus("online");
-  setTimeout(goOffline, utils.nextCoachingClose(true) + 5000);
+  setTimeout(goOffline, utils.nextCoachingClose(true).as('milliseconds') + 5000);
 }
 
 function goOffline() {
   bot.editStatus("invisible");
-  setTimeout(goOnline, utils.nextCoachingOpen(true) + 5000);
+  setTimeout(goOnline, utils.nextCoachingOpen(true).as('milliseconds') + 5000);
 }
 
 function initStatus() {
@@ -151,14 +151,13 @@ function initBaseMessageHandlers() {
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
         if (!utils.isCoachingOpen()) {
-          const nextMom = utils.nextCoachingOpen(false);
-          const next = nextMom.format('YYYY-MM-DD HH:mm:ss');
-          const durMom = moment.utc().diff(nextMom);
+          const durMom = utils.nextCoachingOpen(true);
+          const next = utils.nextCoachingOpen(false);
           const days = `**${durMom.days()} day${durMom.days() == 1 ? '' : 's'}**`;
           const hours = `**${durMom.hours()} day${durMom.hours() == 1 ? '' : 's'}**`;
           const duration = `**${durMom.days()} days**, **${durMom.hours()} hours**`;
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
-            `The next scheduled open time begins at **${next.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${days}, ${hours} from now. `
+            `The next scheduled open time begins at **${next.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${days}, ${hours} from now. ` +
             `Any changes to the schedule will be posted in <#${config.coachInfoChannel}>.`);
           return;
         }
@@ -237,9 +236,6 @@ function initBaseMessageHandlers() {
 
     thread.deleteChatMessage(msg.id);
   });
-
-  utils.nextCoachingOpen();
-  utils.nextCoachingClose();
 
   bot.on('messageReactionAdd', async (msg, emoji, userId) => {
     if (!(msg.channel instanceof Eris.PrivateChannel)) return;
