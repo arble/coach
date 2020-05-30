@@ -390,7 +390,7 @@ function nextCoachingOpen(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   if (duration) {
-    return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(5, 'days')));
+    return moment.duration(moment.utc().utcOffset(offset).startOf('week').add(5, 'days').diff(now));
   } else {
     return moment.utc().utcOffset(offset).startOf('week').add(5, 'days');
   }
@@ -401,7 +401,7 @@ function nextCoachingClose(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   if (duration) {
-    return moment.duration(now.diff(moment.utc().utcOffset(offset).startOf('week').add(7, 'days')));
+    return moment.duration(moment.utc().utcOffset(offset).startOf('week').add(7, 'days').diff(now));
   } else {
     return moment.utc().utcOffset(offset).startOf('week').add(7, 'days');
   }
