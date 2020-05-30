@@ -154,8 +154,7 @@ function initBaseMessageHandlers() {
           const durMom = utils.nextCoachingOpen(true);
           const next = utils.nextCoachingOpen(false);
           const days = `**${durMom.days()} day${durMom.days() == 1 ? '' : 's'}**`;
-          const hours = `**${durMom.hours()} day${durMom.hours() == 1 ? '' : 's'}**`;
-          const duration = `**${durMom.days()} days**, **${durMom.hours()} hours**`;
+          const hours = `**${durMom.hours()} hour${durMom.hours() == 1 ? '' : 's'}**`;
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
             `The next scheduled open time begins at **${next.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${days}, ${hours} from now. ` +
             `Any changes to the schedule will be posted in <#${config.coachInfoChannel}>.`);
