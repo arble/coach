@@ -169,7 +169,9 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   if (!quiet) {
     try {
-      const reply = await newThread.postToUser(config.gatherChoiceMessage);
+      await newThread.postToUser(config.gatherChoiceMessage);
+      const reply = await newThread.postToUser(`Which **role** would you like coaching for? Please note that only roles with available ` +
+        `space for new sessions are shown. If your role is full, choose ❌ for now and check <#${config.coachInfoChannel}> for updates.`);
       await knex('threads')
       .where('id', newThread.id)
       .update({

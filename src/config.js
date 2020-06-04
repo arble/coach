@@ -75,7 +75,7 @@ const defaultConfig = {
 
   "gatherChoiceMessage": "Welcome to the /r/Overwatch CoachMail bot. I'm going to ask you a few questions so that the right kind of " +
   "coach can help you. Answer the first three questions by reacting to the appropriate emoji underneath. At any time during these questions, " +
-  "react to the ❌ on this message to cancel the session. Which **role** would you like coaching for?",
+  "react to the ❌ on this message to cancel the session.",
   "gatherRankMessage": "What's your **rank**? Select <:Unranked:705979240952365127> if you do not have a rank.",
   "gatherPlatformMessage": "What **platform** do you play on?",
   "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
