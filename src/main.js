@@ -74,7 +74,11 @@ function waitForGuild(guildId) {
 
 function initStatus() {
   function applyStatus() {
-    bot.editStatus(null, {name: utils.isCoachingOpen() ? config.openStatus : config.closedStatus});
+    if (utils.isCoachingOpen) {
+      bot.editStatus("online"", {name: config.openStatus});
+    } else {
+      bot.editStatus("invisible", {name: config.closedStatus});
+    }
   }
 
   // Set the bot status initially, then reapply it every hour since in some cases it gets unset
