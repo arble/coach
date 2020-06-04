@@ -74,7 +74,7 @@ function waitForGuild(guildId) {
 
 function initStatus() {
   function applyStatus() {
-    if (utils.isCoachingOpen(true)) {
+    if (await utils.getOpenRoles(true)) {
       bot.editStatus("online", {name: config.openStatus});
     } else {
       bot.editStatus("invisible", {name: config.closedStatus});
@@ -138,7 +138,7 @@ function initBaseMessageHandlers() {
         // Ignore messages that shouldn't usually open new threads, such as "ok", "thanks", etc.
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
-        if (!utils.isCoachingOpen(true)) {
+        if (!await utils.getOpenRoles(true)) {
           const durMom = utils.nextCoachingOpen(true);
           const next = utils.nextCoachingOpen(false);
           const days = `**${durMom.days()} day${durMom.days() == 1 ? '' : 's'}**`;

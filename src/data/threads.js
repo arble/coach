@@ -176,7 +176,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
         gather_choice: reply.id,
       });
 
-      const availableRoles = utils.getOpenRoles(false);
+      const availableRoles = await utils.getOpenRoles(false);
       for (roleEmoji of config.roleChoiceReactions) {
         const name = roleEmoji.split(':')[0];
         if (availableRoles[name]) {

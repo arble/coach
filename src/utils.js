@@ -374,7 +374,7 @@ function roleToCategory(role) {
   }
 }
 
-function getOpenRoles(boolOnly) {
+async function getOpenRoles(boolOnly) {
   // do the quick time check first
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
