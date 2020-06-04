@@ -176,8 +176,12 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
         gather_choice: reply.id,
       });
 
+      const availableRoles = utils.getOpenRoles(false);
       for (roleEmoji of config.roleChoiceReactions) {
-        await bot.addMessageReaction(reply.channel.id, reply.id, roleEmoji);
+        const name = roleEmoji.split(':')[0];
+        if (availableRoles[name]) {
+          await bot.addMessageReaction(reply.channel.id, reply.id, roleEmoji);
+        }
       }
       await bot.addMessageReaction(reply.channel.id, reply.id, '❌');
     } catch (err) {

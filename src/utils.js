@@ -292,10 +292,6 @@ async function checkRoleCapacity(emoji) {
     return false;
   }
 
-  // const foundCategory = getInboxGuild().channels.find(c => {
-  //   return (c instanceof Eris.CategoryChannel) && (c.id === category)
-  // });
-
   const foundCategory = bot.getChannel(category);
 
   if (!foundCategory) return false;
@@ -378,12 +374,24 @@ function roleToCategory(role) {
   }
 }
 
-function isCoachingOpen() {
+function getOpenRoles(boolOnly) {
+  // do the quick time check first
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   const thisWeekStart = moment.utc().utcOffset(offset).startOf('isoWeek').add(5, 'days');
   const thisWeekEnd = moment.utc().utcOffset(offset).startOf('isoWeek').add(7, 'days');
-  return now.isBetween(thisWeekStart, thisWeekEnd);
+  if (!now.isBetween(thisWeekStart, thisWeekEnd)) {
+    return null;
+  }
+  if (boolOnly) {
+    return await checkRoleCapacity('Damage') || await checkRoleCapacity ('Support') || await checkRoleCapacity('Tank');
+  } else {
+    return {
+      Damage: await checkRoleCapacity('Damage'),
+      Support: await checkRoleCapacity('Support'),
+      Tank: await checkRoleCapacity('Tank')
+    };
+  }
 }
 
 function nextCoachingOpen(duration) {
@@ -448,7 +456,7 @@ module.exports = {
   clearOtherUserReactions,
   getUserReactionChoice,
   checkRoleCapacity,
-  isCoachingOpen,
+  getOpenRoles,
   nextCoachingOpen,
   nextCoachingClose
 };
