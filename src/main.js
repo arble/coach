@@ -78,24 +78,14 @@ function waitForGuild(guildId) {
   });
 }
 
-function goOnline() {
-  bot.editStatus("online");
-  setTimeout(goOffline, utils.nextCoachingClose(true).as('milliseconds') + 5000);
-}
-
-function goOffline() {
-  bot.editStatus("invisible");
-  setTimeout(goOnline, utils.nextCoachingOpen(true).as('milliseconds') + 5000);
-}
-
 function initStatus() {
   function applyStatus() {
-    bot.editStatus(null, {name: config.status});
+    bot.editStatus(null, {name: utils.isCoachingOpen() ? config.openStatus : config.closedStatus});
   }
 
   // Set the bot status initially, then reapply it every hour since in some cases it gets unset
   applyStatus();
-  setInterval(applyStatus, 60 * 60 * 1000);
+  setInterval(applyStatus, 10 * 60 * 1000);
 }
 
 function initBaseMessageHandlers() {
@@ -259,7 +249,7 @@ function initBaseMessageHandlers() {
       if (thread.gather_state === THREAD_GATHER_INFO.CHOICE && config.roleChoiceReactions.includes(`${emoji.name}:${emoji.id}`)) {
         if (!await utils.checkRoleCapacity(emoji.name)) {
           await thread.postToUser(`Unfortunately, we don't have room for any more ${emoji.name} coaching sessions at the moment. ` +
-        `Check out <#${config.coachInfoChannel}> for updates on when we'll have more room. I'll go ahead and close this session. Sorry!`);
+        `Check out <#${config.coachInfoChannel}> for schedule info and updates. I'll go ahead and close this session. Sorry!`);
           await thread.close(false);
           return;
         }

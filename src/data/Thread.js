@@ -208,6 +208,16 @@ class Thread {
     }
 
     if (this.gather_state === THREAD_GATHER_INFO.REQUEST) {
+      await knex('threads')
+      .where('id', this.id)
+      .update({
+        gather_request: content,
+        gather_state: THREAD_GATHER_INFO.REPLAY
+      });
+      this.postToUser(config.gatherReplayMessage);
+    }
+
+    if (this.gather_state === THREAD_GATHER_INFO.REPLAY) {
       this.finishSurvey(content);
     }
 
@@ -243,7 +253,7 @@ class Thread {
       await knex('threads')
       .where('id', this.id)
       .update({
-        gather_request: content ? content : this.gather_request,
+        gather_replay: content ? content : this.gather_replay,
         gather_state: THREAD_GATHER_INFO.INCOMPLETE
       });
       await bot.addMessageReaction(reply.channel.id, reply.id, '✅');
@@ -253,7 +263,7 @@ class Thread {
     await knex('threads')
     .where('id', this.id)
     .update({
-      gather_request: content ? content : this.gather_request,
+      gather_replay: content ? content : this.gather_replay,
       gather_state: THREAD_GATHER_INFO.COMPLETE
     });
     this.postToUser(config.gatherCompleteMessage);
