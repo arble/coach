@@ -73,7 +73,7 @@ function waitForGuild(guildId) {
 }
 
 function initStatus() {
-  function applyStatus() {
+  async function applyStatus() {
     if (await utils.getOpenRoles(true)) {
       bot.editStatus("online", {name: config.openStatus});
     } else {
