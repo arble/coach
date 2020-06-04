@@ -68,7 +68,7 @@ const defaultConfig = {
   "snippetPrefixAnon": "!!!",
 
   "openStatus": "DM for coaching",
-  "closedStatus" "Coaching currently closed",
+  "closedStatus": "Coaching currently closed",
   "responseMessage": "Thank you for your message! Our mod team will reply to you here as soon as possible.",
   "closeMessage": null,
   "allowUserClose": false,
