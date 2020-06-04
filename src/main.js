@@ -49,12 +49,6 @@ module.exports = {
       initBaseMessageHandlers();
       initPlugins();
 
-      if (utils.isCoachingOpen()) {
-        goOnline();
-      } else {
-        goOffline();
-      }
-
       console.log('');
       console.log('Done! Now listening to DMs.');
       console.log('');
