@@ -75,7 +75,7 @@ function waitForGuild(guildId) {
 function initStatus() {
   function applyStatus() {
     if (utils.isCoachingOpen) {
-      bot.editStatus("online"", {name: config.openStatus});
+      bot.editStatus("online", {name: config.openStatus});
     } else {
       bot.editStatus("invisible", {name: config.closedStatus});
     }
