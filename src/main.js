@@ -141,7 +141,7 @@ function initBaseMessageHandlers() {
         if (!await utils.getOpenRoles(true)) {
           const next = utils.nextCoachingOpen();
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
-            `The next scheduled open time begins at **${next.time.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${next.duration} from now. ` +
+            `The next scheduled open time begins at **${next.time.format('YYYY-MM-DD HH:mm')} UTC** (**${next.duration}** from now). ` +
             `Any changes to the schedule will be posted in <#${config.coachInfoChannel}>.`);
           return;
         }
