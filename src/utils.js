@@ -383,9 +383,9 @@ async function getOpenRoles(boolOnly) {
   */
 
   const now = moment();
-  now.add(((now.week() % 3) - 1) * 8 - 3, 'hours');
+  now.add(((now.week() % 3) - 1) * 8, 'hours');
   if (now.isoWeekday() < 6) return null;
-  if (now.isoWeekday() == 5 && now.hour() < 18) return null;
+  if (now.isoWeekday() == 5 && now.hour() < 21) return null;
 /*
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
@@ -407,24 +407,27 @@ async function getOpenRoles(boolOnly) {
 }
 
 function nextCoachingOpen(duration) {
-  const now = moment.utc();
-  const offset = ((now.week() % 3) - 1) * 480;
-  if (duration) {
-    return moment.duration(moment().startOf('isoWeek').add(5, 'days').utcOffset(offset).diff(now));
+  const now = moment();
+  const offset = (now.week() % 3) * 8;
+  const target = moment().startOf('isoWeek').add(5, 'days').add(21 - offset, 'hours');
+  if (now.isAfter(target)) {
+    // get next week's
+    const nextOffset = ((now.isoWeek() + 1) % 3) * 8;
+    const nextTarget = target.startOf('day').add(1, 'week').add(21 - nextOffset, 'hours');
+    if (duration) {
+      return moment.duration(nextTarget.diff(now));
+    } else {
+      return nextTarget;
+    }
   } else {
-    return moment().startOf('isoWeek').add(5, 'days').utcOffset(offset);
+    if (duration) {
+      return moment.duration(target.diff(now));
+    } else {
+      return target;
+    }
   }
 
-}
 
-function nextCoachingClose(duration) {
-  const now = moment.utc();
-  const offset = ((now.week() % 3) - 1) * 480;
-  if (duration) {
-    return moment.duration(moment().startOf('isoWeek').add(7, 'days').utcOffset(offset).diff(now));
-  } else {
-    return moment().startOf('isoWeek').add(7, 'days').utcOffset(offset);
-  }
 }
 
 module.exports = {
@@ -469,6 +472,5 @@ module.exports = {
   getUserReactionChoice,
   checkRoleCapacity,
   getOpenRoles,
-  nextCoachingOpen,
-  nextCoachingClose
+  nextCoachingOpen
 };
