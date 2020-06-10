@@ -378,8 +378,8 @@ async function getOpenRoles(boolOnly) {
   // do the quick time check first
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
-  const thisWeekStart = moment.utc().utcOffset(offset).startOf('isoWeek').add(5, 'days');
-  const thisWeekEnd = moment.utc().utcOffset(offset).startOf('isoWeek').add(7, 'days');
+  const thisWeekStart = moment().startOf('isoWeek').add(5, 'days').utcOffset(offset);
+  const thisWeekEnd = moment().startOf('isoWeek').add(7, 'days').utcOffset(offset);
   if (!now.isBetween(thisWeekStart, thisWeekEnd)) {
     return null;
   }
@@ -398,9 +398,9 @@ function nextCoachingOpen(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   if (duration) {
-    return moment.duration(moment.utc().utcOffset(offset).startOf('isoWeek').add(5, 'days').diff(now));
+    return moment.duration(moment().startOf('isoWeek').add(5, 'days').utcOffset(offset).diff(now));
   } else {
-    return moment.utc().utcOffset(offset).startOf('isoWeek').add(5, 'days');
+    return moment().startOf('isoWeek').add(5, 'days').utcOffset(offset);
   }
 
 }
@@ -409,9 +409,9 @@ function nextCoachingClose(duration) {
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   if (duration) {
-    return moment.duration(moment.utc().utcOffset(offset).startOf('isoWeek').add(7, 'days').diff(now));
+    return moment.duration(moment().startOf('isoWeek').add(7, 'days').utcOffset(offset).diff(now));
   } else {
-    return moment.utc().utcOffset(offset).startOf('isoWeek').add(7, 'days');
+    return moment().startOf('isoWeek').add(7, 'days').utcOffset(offset);
   }
 }
 
