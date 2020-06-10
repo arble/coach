@@ -375,7 +375,18 @@ function roleToCategory(role) {
 }
 
 async function getOpenRoles(boolOnly) {
-  // do the quick time check first
+  /*
+  * Our check is somewhat cheaty. Get the current time, move it by the appropriate
+  * mulitple of 8 hours, and check whether our ISO day of week is 6 or 7. If it isn't,
+  * we're not in coaching hours. Offset by -3 to try to put the opening time in the most
+  * useful time range for each continent.
+  */
+
+  const now = moment();
+  now.add(((now.week() % 3) - 1) * 8 - 3, 'hours');
+  if (now.isoWeekday() < 6) return null;
+  if (now.isoWeekday() == 5 && now.hour() < 18) return null;
+/*
   const now = moment.utc();
   const offset = ((now.week() % 3) - 1) * 480;
   const thisWeekStart = moment().startOf('isoWeek').add(5, 'days').utcOffset(offset);
@@ -383,6 +394,7 @@ async function getOpenRoles(boolOnly) {
   if (!now.isBetween(thisWeekStart, thisWeekEnd)) {
     return null;
   }
+  */
   if (boolOnly) {
     return await checkRoleCapacity('Damage') || await checkRoleCapacity ('Support') || await checkRoleCapacity('Tank');
   } else {
