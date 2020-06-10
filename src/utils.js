@@ -408,8 +408,8 @@ async function getOpenRoles(boolOnly) {
 
 function nextCoachingOpen(duration) {
   const now = moment();
-  const offset = (now.week() % 3) * 8;
-  const target = moment().startOf('isoWeek').add(5, 'days').add(21 - offset, 'hours');
+  const offset = (now.isoWeek() % 3) * 8;
+  const target = moment().startOf('isoWeek').add(4, 'days').add(21 - offset, 'hours');
   if (now.isAfter(target)) {
     // get next week's
     const nextOffset = ((now.isoWeek() + 1) % 3) * 8;
