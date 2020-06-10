@@ -406,7 +406,7 @@ async function getOpenRoles(boolOnly) {
   }
 }
 
-function nextCoachingOpen(duration) {
+function nextCoachingOpen() {
   const now = moment();
   const offset = (now.isoWeek() % 3) * 8;
   const target = moment().startOf('isoWeek').add(4, 'days').add(21 - offset, 'hours');
@@ -414,17 +414,15 @@ function nextCoachingOpen(duration) {
     // get next week's
     const nextOffset = ((now.isoWeek() + 1) % 3) * 8;
     const nextTarget = target.startOf('day').add(1, 'week').add(21 - nextOffset, 'hours');
-    if (duration) {
-      return moment.duration(nextTarget.diff(now));
-    } else {
-      return nextTarget;
-    }
+    return {
+      time:       nextTarget,
+      duration:   humanizeDuration(moment.duration(nextTarget.diff(now)).asMilliseconds(), { largest: 2, round: true })
+    };
   } else {
-    if (duration) {
-      return moment.duration(target.diff(now));
-    } else {
-      return target;
-    }
+    return {
+      time:       target,
+      duration:   humanizeDuration(moment.duration(target.diff(now)).asMilliseconds(), { largest: 2, round: true })
+    };
   }
 
 
