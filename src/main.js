@@ -139,12 +139,9 @@ function initBaseMessageHandlers() {
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
         if (!await utils.getOpenRoles(true)) {
-          const durMom = utils.nextCoachingOpen(true);
-          const next = utils.nextCoachingOpen(false);
-          const days = `**${durMom.days()} day${durMom.days() == 1 ? '' : 's'}**`;
-          const hours = `**${durMom.hours()} hour${durMom.hours() == 1 ? '' : 's'}**`;
+          const next = utils.nextCoachingOpen();
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
-            `The next scheduled open time begins at **${next.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${days}, ${hours} from now. ` +
+            `The next scheduled open time begins at **${next.time.format('YYYY-MM-DD HH:mm')} UTC**. That's about ${next.duration} from now. ` +
             `Any changes to the schedule will be posted in <#${config.coachInfoChannel}>.`);
           return;
         }
