@@ -315,7 +315,9 @@ function initPlugins() {
     alert,
     auto,
     claim,
-    sub
+    sub,
+    mark,
+    threadcounts
   ];
 
   const plugins = [...builtInPlugins];

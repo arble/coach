@@ -283,6 +283,14 @@ async function findByChannelId(channelId) {
   return (thread ? new Thread(thread) : null);
 }
 
+async function getThreadRoles() {
+  const counts = await knex('threads')
+    .count('id')
+    .where('status', THREAD_STATUS.OPEN)
+    .groupBy('thread_role');
+  return counts;
+}
+
 /**
  * @param {String} channelId
  * @returns {Promise<Thread>}

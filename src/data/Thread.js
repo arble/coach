@@ -264,7 +264,8 @@ class Thread {
     .where('id', this.id)
     .update({
       gather_replay: content ? content : this.gather_replay,
-      gather_state: THREAD_GATHER_INFO.COMPLETE
+      gather_state: THREAD_GATHER_INFO.COMPLETE,
+      thread_role: userRole.toLowerCase()
     });
     this.postToUser(config.gatherCompleteMessage);
     if (config.allowUserClose) {
@@ -593,6 +594,14 @@ You can "!claim" this thread to move it to your own category on this server.
       .where('id', this.id)
       .update({
         alert_id: userId
+      });
+  }
+
+  async setRole(role) {
+    await knex('threads')
+      .where('id', this.id)
+      .update({
+        thread_role: role
       });
   }
 
