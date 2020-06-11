@@ -2,6 +2,7 @@ const threads = require("../data/threads");
 
 module.exports = ({ bot, knex, config, commands }) => {
   commands.addInboxThreadCommand('threadcounts', [], async (msg, args, thread) => {
-    thread.postSystemMessage(await threads.getThreadRoles());
+    const roles = await threads.getThreadRoles();
+    thread.postSystemMessage(roles.toString());
   });
 };
