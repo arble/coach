@@ -285,7 +285,8 @@ async function findByChannelId(channelId) {
 
 async function getThreadRoles() {
   const counts = await knex('threads')
-    .count('id')
+    .select('thread_role')
+    .count('id as cnt')
     .where('status', THREAD_STATUS.OPEN)
     .groupBy('thread_role');
   return counts;

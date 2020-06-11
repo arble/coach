@@ -215,10 +215,12 @@ class Thread {
         gather_state: THREAD_GATHER_INFO.REPLAY
       });
       this.postToUser(config.gatherReplayMessage);
+      return;
     }
 
     if (this.gather_state === THREAD_GATHER_INFO.REPLAY) {
       this.finishSurvey(content);
+      return;
     }
 
     if (this.scheduled_close_at) {
