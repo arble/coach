@@ -1,4 +1,4 @@
-const threads = require("../utils");
+const utils = require("../utils");
 
 module.exports = ({ bot, knex, config, commands }) => {
   commands.addInboxThreadCommand('threadcounts', [], async (msg, args, thread) => {
