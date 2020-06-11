@@ -415,5 +415,6 @@ module.exports = {
   getThreadsThatShouldBeSuspended,
   getExpiredIncompleteThreads,
   getThreadsThatShouldBeSorry,
-  createThreadInDB
+  createThreadInDB,
+  getThreadRoles
 };
