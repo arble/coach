@@ -178,7 +178,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
         gather_choice: reply.id,
       });
 
-      const availableRoles = await utils.getOpenRoles(false);
+      const availableRoles = await checkRoleCapacity(false);
       for (roleEmoji of config.roleChoiceReactions) {
         const name = roleEmoji.split(':')[0];
         if (availableRoles[name]) {
@@ -283,6 +283,20 @@ async function findByChannelId(channelId) {
   return (thread ? new Thread(thread) : null);
 }
 
+async function checkRoleCapacity(justAny) {
+  const openCounts = await getThreadRoles();
+  const res = {
+    Damage:   openCounts["Damage"] < config.categoryAutomation.damageLimit,
+    Support:  openCounts["Support"] < config.categoryAutomation.damageLimit,
+    Tank:     openCounts["Tank"] < config.categoryAutomation.damageLimit
+  };
+  if (justAny) {
+    return res.Damage || res.Support || res.Tank;
+  } else {
+    return res;
+  }
+}
+
 async function getThreadRoles() {
   const counts = await knex('threads')
     .select('thread_role')
@@ -290,7 +304,7 @@ async function getThreadRoles() {
     .where('status', THREAD_STATUS.OPEN)
     .groupBy('thread_role');
     const res = new Object();
-    for (entry : counts) {
+    for (entry in counts) {
       res[entry.thread_role] = entry.cnt;
     }
   return res;
@@ -421,5 +435,6 @@ module.exports = {
   getExpiredIncompleteThreads,
   getThreadsThatShouldBeSorry,
   createThreadInDB,
+  checkRoleCapacity,
   getThreadRoles
 };

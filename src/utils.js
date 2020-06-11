@@ -277,23 +277,6 @@ async function clearOtherUserReactions(message, emoji, userId) {
   }
 }
 
-async function checkRoleCapacity(emoji) {
-  let category, limit;
-
-  const openCounts = threads.getThreadRoles();
-  let limit;
-  if (emoji == "Damage") {
-    limit = config.categoryAutomation.damageLimit;
-  } else if (emoji == "Tank") {
-    limit = config.categoryAutomation.tankLimit;
-  } else if (emoji == "Support") {
-    limit = config.categoryAutomation.supportLimit;
-  } else {
-    return false;
-  }
-  return openCounts[emoji] < limit;
-}
-
 async function getUserReactionChoice(chanId, msgId) {
   const msg = await bot.getMessage(chanId, msgId);
   for (let rct in msg.reactions) {
@@ -369,36 +352,12 @@ function roleToCategory(role) {
   }
 }
 
-async function getOpenRoles(boolOnly) {
-  /*
-  * Our check is somewhat cheaty. Get the current time, move it by the appropriate
-  * mulitple of 8 hours, and check whether our ISO day of week is 6 or 7. If it isn't,
-  * we're not in coaching hours. Offset by -3 to try to put the opening time in the most
-  * useful time range for each continent.
-  */
-
+async function isCoachingOpen() {
   const now = moment();
   now.add(((now.week() % 3) - 1) * 8, 'hours');
-  if (now.isoWeekday() < 6) return null;
-  if (now.isoWeekday() == 5 && now.hour() < 21) return null;
-/*
-  const now = moment.utc();
-  const offset = ((now.week() % 3) - 1) * 480;
-  const thisWeekStart = moment().startOf('isoWeek').add(5, 'days').utcOffset(offset);
-  const thisWeekEnd = moment().startOf('isoWeek').add(7, 'days').utcOffset(offset);
-  if (!now.isBetween(thisWeekStart, thisWeekEnd)) {
-    return null;
-  }
-  */
-  if (boolOnly) {
-    return await checkRoleCapacity('Damage') || await checkRoleCapacity ('Support') || await checkRoleCapacity('Tank');
-  } else {
-    return {
-      Damage: await checkRoleCapacity('Damage'),
-      Support: await checkRoleCapacity('Support'),
-      Tank: await checkRoleCapacity('Tank')
-    };
-  }
+  if (now.isoWeekday() < 6) return false;
+  if (now.isoWeekday() == 5 && now.hour() < 21) return false;
+  return true;
 }
 
 function nextCoachingOpen() {
@@ -461,7 +420,6 @@ module.exports = {
   roleToCategory,
   clearOtherUserReactions,
   getUserReactionChoice,
-  checkRoleCapacity,
-  getOpenRoles,
+  isCoachingOpen,
   nextCoachingOpen
 };
