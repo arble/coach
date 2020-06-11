@@ -283,19 +283,6 @@ async function findByChannelId(channelId) {
   return (thread ? new Thread(thread) : null);
 }
 
-async function getThreadRoles() {
-  const counts = await knex('threads')
-    .select('thread_role')
-    .count('id as cnt')
-    .where('status', THREAD_STATUS.OPEN)
-    .groupBy('thread_role');
-    const res = new Object();
-    for (entry : counts) {
-      res[entry.thread_role] = entry.cnt;
-    }
-  return res;
-}
-
 /**
  * @param {String} channelId
  * @returns {Promise<Thread>}
@@ -420,6 +407,5 @@ module.exports = {
   getThreadsThatShouldBeSuspended,
   getExpiredIncompleteThreads,
   getThreadsThatShouldBeSorry,
-  createThreadInDB,
-  getThreadRoles
+  createThreadInDB
 };

@@ -280,8 +280,7 @@ async function clearOtherUserReactions(message, emoji, userId) {
 async function checkRoleCapacity(emoji) {
   let category, limit;
 
-  const openCounts = threads.getThreadRoles();
-  let limit;
+  const openCounts = await getThreadRoles();
   if (emoji == "Damage") {
     limit = config.categoryAutomation.damageLimit;
   } else if (emoji == "Tank") {
@@ -421,6 +420,19 @@ function nextCoachingOpen() {
   }
 }
 
+async function getThreadRoles() {
+  const counts = await knex('threads')
+    .select('thread_role')
+    .count('id as cnt')
+    .where('status', THREAD_STATUS.OPEN)
+    .groupBy('thread_role');
+    const res = new Object();
+    for (entry in counts) {
+      res[entry.thread_role] = entry.cnt;
+    }
+  return res;
+}
+
 module.exports = {
   BotError,
 
@@ -463,5 +475,6 @@ module.exports = {
   getUserReactionChoice,
   checkRoleCapacity,
   getOpenRoles,
-  nextCoachingOpen
+  nextCoachingOpen,
+  getThreadRoles
 };
