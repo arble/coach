@@ -304,7 +304,7 @@ async function getThreadRoles() {
     .where('status', THREAD_STATUS.OPEN)
     .groupBy('thread_role');
     const res = new Object();
-    for (entry in counts) {
+    for (const entry of counts) {
       res[entry.thread_role] = entry.cnt;
     }
   return res;
