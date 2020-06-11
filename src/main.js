@@ -76,7 +76,7 @@ function waitForGuild(guildId) {
 
 function initStatus() {
   async function applyStatus() {
-    if (await utils.getOpenRoles(true)) {
+    if (await threads.checkRoleCapacity(true) && utils.isCoachingOpen()) {
       bot.editStatus("online", {name: config.openStatus});
     } else {
       bot.editStatus("invisible", {name: config.closedStatus});
@@ -140,7 +140,7 @@ function initBaseMessageHandlers() {
         // Ignore messages that shouldn't usually open new threads, such as "ok", "thanks", etc.
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
-        if (!await utils.isCoachingOpen() || !await threads.checkRoleCapacity(true)) {
+        if (!utils.isCoachingOpen() || !await threads.checkRoleCapacity(true)) {
           const next = utils.nextCoachingOpen();
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
             `The next scheduled open time begins at **${next.time.utc().format('YYYY-MM-DD HH:mm')} UTC** (**${next.duration}** from now). ` +

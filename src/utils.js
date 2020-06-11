@@ -352,7 +352,7 @@ function roleToCategory(role) {
   }
 }
 
-async function isCoachingOpen() {
+function isCoachingOpen() {
   const now = moment();
   now.add(((now.week() % 3) - 1) * 8, 'hours');
   if (now.isoWeekday() < 6) return false;

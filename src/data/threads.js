@@ -287,8 +287,8 @@ async function checkRoleCapacity(justAny) {
   const openCounts = await getThreadRoles();
   const res = {
     Damage:   openCounts["Damage"] < config.categoryAutomation.damageLimit,
-    Support:  openCounts["Support"] < config.categoryAutomation.damageLimit,
-    Tank:     openCounts["Tank"] < config.categoryAutomation.damageLimit
+    Support:  openCounts["Support"] < config.categoryAutomation.supportLimit,
+    Tank:     openCounts["Tank"] < config.categoryAutomation.tankLimit
   };
   if (justAny) {
     return res.Damage || res.Support || res.Tank;
