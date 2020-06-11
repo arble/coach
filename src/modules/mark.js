@@ -7,10 +7,16 @@ module.exports = ({ bot, knex, config, commands }) => {
 
     switch (args.role.toLowerCase()) {
       case 'damage':
+        thread.setRole("Damage");
+        await thread.postSystemMessage(`Thread marked as **Damage**`);
+        break;
       case 'tank':
+        thread.setRole("Tank");
+        await thread.postSystemMessage(`Thread marked as **Tank**`);
+        break;
       case 'support':
-        thread.setRole(args.role.toLowerCase());
-        await thread.postSystemMessage(`Thread marked as **${args.role.toUpperCase()}**`);
+        thread.setRole("Support");
+        await thread.postSystemMessage(`Thread marked as **Support**`);
         break;
       default:
         await thread.postSystemMessage(`That's not a valid role!`);

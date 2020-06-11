@@ -289,7 +289,11 @@ async function getThreadRoles() {
     .count('id as cnt')
     .where('status', THREAD_STATUS.OPEN)
     .groupBy('thread_role');
-  return counts;
+    const res = new Object();
+    for (entry : counts) {
+      res[entry.thread_role] = entry.cnt;
+    }
+  return res;
 }
 
 /**

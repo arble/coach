@@ -303,7 +303,8 @@ class Thread {
     **Platform:** ${userPlatform}
     **Rank:** ${userRank}
     **Role:** ${userRole}
-    **Coaching Request:** ${content ? content : this.gather_request}
+    **Coaching Request:** ${this.gather_request}
+    **Replay/VOD:** ${content ? content : this.gather_replay}
 
 You can "!claim" this thread to move it to your own category on this server.
     `;

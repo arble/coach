@@ -279,24 +279,19 @@ async function clearOtherUserReactions(message, emoji, userId) {
 
 async function checkRoleCapacity(emoji) {
   let category, limit;
+
+  const openCounts = threads.getThreadRoles();
+  let limit;
   if (emoji == "Damage") {
-    category = config.categoryAutomation.damageThread;
     limit = config.categoryAutomation.damageLimit;
   } else if (emoji == "Tank") {
-    category = config.categoryAutomation.tankThread;
     limit = config.categoryAutomation.tankLimit;
   } else if (emoji == "Support") {
-    category = config.categoryAutomation.supportThread;
     limit = config.categoryAutomation.supportLimit;
   } else {
     return false;
   }
-
-  const foundCategory = bot.getChannel(category);
-
-  if (!foundCategory) return false;
-
-  return foundCategory.channels.size < limit;
+  return openCounts[emoji] < limit;
 }
 
 async function getUserReactionChoice(chanId, msgId) {
@@ -424,8 +419,6 @@ function nextCoachingOpen() {
       duration:   humanizeDuration(moment.duration(target.diff(now)).asMilliseconds(), { largest: 2, round: true })
     };
   }
-
-
 }
 
 module.exports = {
