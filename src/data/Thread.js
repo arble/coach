@@ -267,7 +267,7 @@ class Thread {
     .update({
       gather_replay: content ? content : this.gather_replay,
       gather_state: THREAD_GATHER_INFO.COMPLETE,
-      thread_role: userRole.toLowerCase()
+      thread_role: userRole
     });
     this.postToUser(config.gatherCompleteMessage);
     if (config.allowUserClose) {
