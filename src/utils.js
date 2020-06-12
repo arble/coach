@@ -355,6 +355,7 @@ function roleToCategory(role) {
 function isCoachingOpen() {
   const now = moment();
   now.add(((now.week() % 3) - 1) * 8, 'hours');
+  if (config.overrideCoachingClosed) return false;
   if (now.isoWeekday() < 6) return false;
   if (now.isoWeekday() == 5 && now.hour() < 21) return false;
   return true;
