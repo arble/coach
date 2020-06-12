@@ -82,8 +82,10 @@ const defaultConfig = {
   "react to the ❌ on this message to cancel the session.",
   "gatherRankMessage": "What's your **rank**? Select <:Unranked:705979240952365127> if you do not have a rank.",
   "gatherPlatformMessage": "What **platform** do you play on?",
-  "gatherRequestMessage": "What do you want help with? The **more specific** you are, the better for the session. For example, rather than " +
-  "\"get good at Widow\" try something like \"land **more headshots** on **moving targets** as Widow.\"",
+  "gatherRequestMessage": "Please outline what you're looking to get from this coaching session. Be as detailed as possible, and don't " +
+  "be afraid to submit a long answer. The more information you supply up front about your goals, the quicker the coaches will be able " +
+  "to get to the actual coaching. Try to identify some specific mechanical or tactical issues that you think are holding you back, " +
+  "such as accuracy with Pharah's rockets or determining the best times and teammates to use Zarya's barriers with.",
   "gatherReplayMessage": "Please share a replay code, or a link to a video of your gameplay that you want to review with a coach. " +
   "If you're not sure how to get replay codes, please visit " +
   "https://playoverwatch.com/en-us/news/23000187/introducing-overwatch-replays-see-your-past-games-from-new-perspectives",

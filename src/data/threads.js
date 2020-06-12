@@ -175,7 +175,7 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
         `where coaches and community members can help you out in a more casual format. If this applies to you, choose ❌ below ` +
         `to cancel the session. If you would like to continue, answer the following questions by reacting to emoji underneath.
 
-        Which **role** would you like coaching for? Please note that only roles with available space for new sessions are shown. ` +
+Which **role** would you like coaching for? Please note that only roles with available space for new sessions are shown. ` +
         `If your role is not shown, choose ❌ for now and check <#${config.coachInfoChannel}> for updates.`);
       await knex('threads')
       .where('id', newThread.id)
