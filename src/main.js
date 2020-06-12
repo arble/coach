@@ -143,6 +143,7 @@ function initBaseMessageHandlers() {
         if (config.overrideCoachingClosed) {
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests, ` +
             `with no no scheduled time to reopen. Please check <#${config.coachInfoChannel}> for updates.`);
+          return;
         }
 
         if (!utils.isCoachingOpen() || !await threads.checkRoleCapacity(true)) {
