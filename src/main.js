@@ -140,6 +140,11 @@ function initBaseMessageHandlers() {
         // Ignore messages that shouldn't usually open new threads, such as "ok", "thanks", etc.
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
+        if (config.overrideCoachingClosed) {
+          await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests, ` +
+            `with no no scheduled time to reopen. Please check <#${config.coachInfoChannel}> for updates.`);
+        }
+
         if (!utils.isCoachingOpen() || !await threads.checkRoleCapacity(true)) {
           const next = utils.nextCoachingOpen();
           await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +

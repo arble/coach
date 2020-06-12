@@ -169,9 +169,14 @@ async function createNewThreadForUser(user, quiet = false, ignoreRequirements = 
 
   if (!quiet) {
     try {
-      await newThread.postToUser(config.gatherChoiceMessage);
-      const reply = await newThread.postToUser(`Which **role** would you like coaching for? Please note that only roles with available ` +
-        `space for new sessions are shown. If your role is full, choose ❌ for now and check <#${config.coachInfoChannel}> for updates.`);
+      const reply = await newThread.postToUser(`Welcome to the /r/Overwatch CoachMail bot. This bot is intended for use by players who ` +
+        `already have videos or replays available to review with a coach, and who are looking for an interactive session analysing those ` +
+        `videos or replays. If you simply have questions about heroes, maps, any other aspect of the game, check out <#${config.adviceChannel}>, ` +
+        `where coaches and community members can help you out in a more casual format. If this applies to you, choose ❌ below ` +
+        `to cancel the session. If you would like to continue, answer the following questions by reacting to emoji underneath.
+
+        Which **role** would you like coaching for? Please note that only roles with available space for new sessions are shown. ` +
+        `If your role is not shown, choose ❌ for now and check <#${config.coachInfoChannel}> for updates.`);
       await knex('threads')
       .where('id', newThread.id)
       .update({

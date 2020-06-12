@@ -73,7 +73,11 @@ const defaultConfig = {
   "closeMessage": null,
   "allowUserClose": false,
 
-  "gatherChoiceMessage": "Welcome to the /r/Overwatch CoachMail bot. I'm going to ask you a few questions so that the right kind of " +
+  "gatherChoiceMessage": "Welcome to the /r/Overwatch CoachMail bot. This bot is intended for use by players who already have videos " +
+  "or replays available to review with a coach, and who are looking for an interactive session analysing those videos or replays. " +
+  "If you simply have questions about heroes, maps, any other aspect of the game, check out our GAMEPLAY_ADVICE channel, where " +
+  "coaches and community members can help you out in a more casual format. If this applies to you, choose ❌ below to cancel the session. " +  
+  "I'm going to ask you a few questions so that the right kind of " +
   "coach can help you. Answer the first three questions by reacting to the appropriate emoji underneath. At any time during these questions, " +
   "react to the ❌ on this message to cancel the session.",
   "gatherRankMessage": "What's your **rank**? Select <:Unranked:705979240952365127> if you do not have a rank.",
