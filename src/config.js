@@ -102,6 +102,7 @@ const defaultConfig = {
   "rankChoiceReactions": [],
   "roleChoiceReactions": [],
   "coachInfoChannel": null,
+  "adviceChannel": null,
   "overrideCoachingClosed": null,
 
   "newThreadCategoryId": null,
