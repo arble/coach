@@ -308,7 +308,8 @@ async function getThreadRoles() {
     .count('id as cnt')
     .where('status', THREAD_STATUS.OPEN)
     .groupBy('thread_role');
-    const res = new Object();
+    // prepopulate values in case any role has no threads
+    const res = {Damage: 0, Tank: 0, Support: 0};
     for (const entry of counts) {
       res[entry.thread_role] = entry.cnt;
     }

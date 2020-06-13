@@ -88,13 +88,12 @@ const defaultConfig = {
   "such as accuracy with Pharah's rockets or determining the best times and teammates to use Zarya's barriers with.",
   "gatherReplayMessage": "Please share a replay code, or a link to a video of your gameplay that you want to review with a coach. " +
   "If you're not sure how to get replay codes, please visit " +
-  "https://playoverwatch.com/en-us/news/23000187/introducing-overwatch-replays-see-your-past-games-from-new-perspectives",
+  "<https://playoverwatch.com/en-us/news/23000187/introducing-overwatch-replays-see-your-past-games-from-new-perspectives>",
   "gatherIncompleteMessage": "You didn't respond to all the questions. Make a selection for each, and then react to ✅ on this message.",
   "gatherCompleteMessage": "Great! Your info has been sent to the coaches. Whoever's best matched with your situation will respond to you " +
-  "as soon as they can. In the meantime, anything you send me from now on will be shared directly with the coaches. So, if you have " +
-  "things like links to videos you would like reviewed, you can send them right away.",
+  "as soon as they can.",
   "userCanCloseMessage": "You can choose to end the session early at any time by typing `!close` in this window.",
-  "gatherCancelmessage": "OK. Cancelling this coaching session. Start another at any time by messaging me again!",
+  "gatherCancelmessage": "OK. Cancelling this coaching session.",
   "gatherTimeoutMessage": "Your session has timed out because you didn't answer the initial questions. You can start another at any time " +
   "by messaging me again.",
   "gatherTimeout": null, // minutes
