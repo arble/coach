@@ -356,9 +356,9 @@ function isCoachingOpen() {
   const now = moment();
   now.add((now.isoWeek() % 3) * 8, 'hours');
   if (config.overrideCoachingClosed) return false;
-  if (now.isoWeekday() < 6) return false;
-  if (now.isoWeekday() == 5 && now.hour() < 21) return false;
-  return true;
+  if (now.isoWeekday() > 5) return true;
+  if (now.isoWeekday() == 5 && now.hour() >= 21) return true;
+  return false;
 }
 
 function nextCoachingOpen() {
