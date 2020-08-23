@@ -141,7 +141,7 @@ function initBaseMessageHandlers() {
         if (config.ignoreAccidentalThreads && msg.content && ACCIDENTAL_THREAD_MESSAGES.includes(msg.content.trim().toLowerCase())) return;
 
         if (config.overrideCoachingClosed) {
-          await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. Currently, the bot is **CLOSED** to new requests. ` +
+          await msg.channel.createMessage(`Welcome to the /r/Overwatch CoachMail bot. The bot is **CLOSED** to new requests, ` +
             `but you can check <#${config.adviceChannel}> to ask for general help, or look through the <#${config.resourcesChannel}> ` +
             `channel for answers to common questions.`);
           return;
