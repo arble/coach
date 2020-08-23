@@ -104,6 +104,7 @@ const defaultConfig = {
   "roleChoiceReactions": [],
   "coachInfoChannel": null,
   "adviceChannel": null,
+  "resourcesChannel": null,
   "overrideCoachingClosed": null,
 
   "newThreadCategoryId": null,
